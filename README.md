@@ -20,4 +20,4 @@ Go to admin panel -> tab customise -> Manage extensions -> enable Top Five
 
 ## Support
 
-https://www.phpbb.com/community/viewtopic.php?f=456&t=2262141
+
