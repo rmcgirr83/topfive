@@ -83,7 +83,7 @@ class listener implements EventSubscriberInterface
 				// grab all admins
 				$admin_ary = $auth->acl_get_list(false, 'a_', false);
 				$admin_ary = (!empty($admin_ary[0]['a_'])) ? $admin_ary[0]['a_'] : array();
-			
+
 				//grab all mods
 				$mod_ary = $auth->acl_get_list(false,'m_', false);
 				$mod_ary = (!empty($mod_ary[0]['m_'])) ? $mod_ary[0]['m_'] : array();
