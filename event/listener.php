@@ -51,7 +51,7 @@ class listener implements EventSubscriberInterface
 		$this->toptopics(5);
 		$this->newusers(5);
 	}
-	
+
 	public function load_language_on_setup($event)
 	{
 		$lang_set_ext = $event['lang_set_ext'];
@@ -83,7 +83,7 @@ class listener implements EventSubscriberInterface
 				// grab all admins
 				$admin_ary = $auth->acl_get_list(false, 'a_', false);
 				$admin_ary = (!empty($admin_ary[0]['a_'])) ? $admin_ary[0]['a_'] : array();
-				
+			
 				//grab all mods
 				$mod_ary = $auth->acl_get_list(false,'m_', false);
 				$mod_ary = (!empty($mod_ary[0]['m_'])) ? $mod_ary[0]['m_'] : array();
@@ -93,7 +93,7 @@ class listener implements EventSubscriberInterface
 				{
 					$sql_and = ' AND ' . $this->db->sql_in_set('u.user_id', $admin_mod_array, true);
 				}
-			}   
+			}
 
 			// do the main sql query
 			$sql = 'SELECT user_id, username, user_colour, user_posts
@@ -129,17 +129,17 @@ class listener implements EventSubscriberInterface
 			));
 		}
 	}
-	
-	public function toptopics($howmany)	
+
+	public function toptopics($howmany)
 	{
 		global $auth;
 
 		$show_shadow = false; //change this to false to not show shadow topics
 		$sql_and = !$show_shadow ? ' AND topic_status <> ' . ITEM_MOVED : '';
-		
+
 		$forum_ary = array();
 		$forum_read_ary = $auth->acl_getf('f_read');
-		
+
 		foreach ($forum_read_ary as $forum_id => $allowed)
 		{
 			if ($allowed['f_read'])
@@ -197,7 +197,7 @@ class listener implements EventSubscriberInterface
 					array(
 						'FROM'	=> array(POSTS_TABLE => 'p'),
 						'ON'	=> 'p.post_id = t.topic_last_post_id',
-					),			
+					),
 				),
 				'WHERE'		=> $this->db->sql_in_set('t.topic_id', $topic_ids),
 				'ORDER_BY'	=> 't.topic_last_post_time DESC',
@@ -208,7 +208,7 @@ class listener implements EventSubscriberInterface
 			{
 				$topic_id = $row['topic_id'];
 				$forum_id = $row['forum_id'];
-				
+
 				$post_unread = (isset($topic_tracking_info[$forum_id][$topic_id]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$topic_id]) ? true : false;
 				$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
 				$topic_title = censor_text($row['topic_title']);
@@ -217,7 +217,7 @@ class listener implements EventSubscriberInterface
 					$topic_title = (utf8_strlen($topic_title) > 60 + 3) ? utf8_substr($topic_title, 0, 60) . '...' : $topic_title;
 				}
 				$is_guest = $row['user_id'] != ANONYMOUS ? false : true;
-		
+
 				$this->template->assign_block_vars('top_five_topic',array(
 					'U_TOPIC'			=> $view_topic_url,
 					'MINI_POST_IMG'		=> ($post_unread) ? $this->user->img('icon_post_target_unread', 'NEW_POST') : $this->user->img('icon_post_target', 'POST'),
@@ -230,15 +230,15 @@ class listener implements EventSubscriberInterface
 
 			$this->db->sql_freeresult($result);
 		}
-		else 
+		else
 		{
 			$this->template->assign_block_vars('top_five_topic', array(
 				'NO_TOPIC_TITLE'	=> $this->user->lang['NO_TOPIC_EXIST'],
 			));
 		}
 	}
-	
-	public function newusers($howmany)	
+
+	public function newusers($howmany)
 	{
 		$ignore_users = array(USER_IGNORE, USER_INACTIVE);
 		// newest registered users
