@@ -1,0 +1,22 @@
+
+<div class="forabg">
+	<div class="inner"><span class="corners-top"><span></span></span>
+		<table class="table1" cellspacing="1" id="top_five">
+		<thead>
+		<tr>
+			<th style="width: 50%;">{L_NEWEST_TOPICS}</th>
+			<th style="width: 20%;">{L_TOP_FIVE_ACTIVE}</th>
+			<th style="width: 30%;">{L_TOP_FIVE_NEWEST}</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr class="bg2">
+					<td valign="top"><!-- BEGIN top_five_topic --><!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}">{top_five_topic.MINI_POST_IMG} {top_five_topic.TOPIC_TITLE}</a><br />&nbsp;&nbsp;{top_five_topic.USERNAME_FULL}&nbsp;&nbsp;{top_five_topic.LAST_TOPIC_TIME}<br /><!-- ENDIF --><!-- END top_five_topic --></td>
+					<td valign="top"><!-- BEGIN top_five_active -->{top_five_active.USERNAME_FULL}<br />&nbsp;&nbsp;{L_POSTS}: <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a><br /><!-- END top_five_active --></td>
+					<td valign="top"><!-- BEGIN top_five_newest -->{top_five_newest.USERNAME_FULL}<br />&nbsp;&nbsp;{L_JOINED}: {top_five_newest.REG_DATE}<br /><!-- END top_five_newest --></td>
+				</tr>
+		</tbody>
+		</table>
+
+	<span class="corners-bottom"><span></span></span></div>
+</div>
