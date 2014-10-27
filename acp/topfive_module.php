@@ -17,7 +17,7 @@ class topfive_module
 	{
 		global $db, $user, $auth, $template, $cache, $request;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
-		
+
 		$this->config = $config;
 		$this->request = $request;
 
@@ -37,7 +37,7 @@ class topfive_module
 			{
 				include($phpbb_root_path . 'includes/functions_user.' . $phpEx);
 			}
-			
+
 			$check_row = array('top_five_how_many' => $request->variable('top_five_how_many', 0));
 			$validate_row = array('top_five_how_many' => array('num', false, 5, 100));
 			$error = validate_data($check_row, $validate_row);
@@ -50,7 +50,7 @@ class topfive_module
 				trigger_error($user->lang['TF_SAVED'] . adm_back_link($this->u_action));
 			}
 		}
-		
+
 		$template->assign_vars(array(
 			'TF_ERROR'	=> isset($error) ? ((sizeof($error)) ? implode('<br />', $error) : '') : '',
 			'HOWMANY'	=> (!empty($this->config['top_five_how_many'])) ? $this->config['top_five_how_many'] : 0,

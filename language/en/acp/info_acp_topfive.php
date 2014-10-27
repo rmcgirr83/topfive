@@ -22,7 +22,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	// ACP
 	'TF_ACP'		=> 'Top Five Extension',
-    'TF_TITLE'		=> 'Top Five Extension Settings',
+	'TF_TITLE'		=> 'Top Five Extension Settings',
 	'TF_VERSION'	=> 'Top Five Version',
 	'TOPFIVE_MOD'	=> 'Top Five',
 	'TF_CONFIG'		=> 'Settings',
@@ -37,6 +37,6 @@ $lang = array_merge($lang, array(
 	'TF_SHOW_ADMINS_MODS'	=> 'Include Admins and Mods',
 	'TF_SHOW_ADMINS_MODS_EXPLAIN'	=> 'Will display admins and mods in top posters',
 	'TOO_SMALL_TOP_FIVE_HOW_MANY'	=> 'The number to display value is too small.',
-	'TOO_LARGE_TOP_FIVE_HOW_MANY'	=> 'The number to display value is too large.',	
+	'TOO_LARGE_TOP_FIVE_HOW_MANY'	=> 'The number to display value is too large.',
 
 ));

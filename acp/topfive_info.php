@@ -10,14 +10,6 @@
 namespace rmcgirr83\topfive\acp;
 
 /**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
-
-/**
 * @package module_install
 */
 class topfive_info
