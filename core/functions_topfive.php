@@ -122,12 +122,12 @@ class functions_topfive
 			/**
 			* Event to modify the SQL query before the topics data is retrieved
 			*
-			* @event topfive.sql_pull_topics_data
+			* @event rmcgirr83.topfive.sql_pull_topics_data
 			* @var	array	sql_array		The SQL array
 			* @since 1.0.0
 			*/
 			$vars = array('sql_array');
-			extract($this->dispatcher->trigger_event('topfive.sql_pull_topics_data', compact($vars)));
+			extract($this->dispatcher->trigger_event('rmcgirr83.topfive.sql_pull_topics_data', compact($vars)));
 
 			$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
 			while( $row = $this->db->sql_fetchrow($result) )
@@ -154,13 +154,13 @@ class functions_topfive
 				/**
 				* Modify the topic data before it is assigned to the template
 				*
-				* @event topfive.modify_tpl_ary
+				* @event rmcgirr83.topfive.modify_tpl_ary
 				* @var	array	row			Array with topic data
 				* @var	array	tpl_ary		Template block array with topic data
 				* @since 1.0.0
 				*/
 				$vars = array('row', 'tpl_ary');
-				extract($this->dispatcher->trigger_event('topfive.modify_tpl_ary', compact($vars)));
+				extract($this->dispatcher->trigger_event('rmcgirr83.topfive.modify_tpl_ary', compact($vars)));
 
 				$this->template->assign_block_vars($tpl_loopname, $tpl_ary);
 			}
