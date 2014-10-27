@@ -108,7 +108,7 @@ class functions_topfive
 
 			// grab all posts that meet criteria and auths
 			$sql_array = array(
-				'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name',
+				'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name',
 				'FROM'		=> array(TOPICS_TABLE => 't'),
 				'LEFT_JOIN'	=> array(
 					array(
