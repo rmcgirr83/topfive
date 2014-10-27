@@ -63,7 +63,7 @@ class listener implements EventSubscriberInterface
 			$ignore_founders = array(USER_FOUNDER);
 		}
 
-		$ignore_users = array_merge($ignore_users, $ignore_founders);	
+		$ignore_users = array_merge($ignore_users, $ignore_founders);
 		$this->topposters($howmany, $ignore_users);
 		$this->newusers($howmany, $ignore_users);
 	}
