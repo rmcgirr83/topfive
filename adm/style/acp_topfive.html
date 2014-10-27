@@ -1,0 +1,41 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_TF_TITLE}</h1>
+<p>{L_TF_VERSION} {TF_VERSION}</p>
+
+<!-- IF TF_ERROR -->
+	<div class="errorbox"><h3>{L_WARNING}</h3>
+		<p>{TF_ERROR}</p>
+	</div>
+<!-- ENDIF -->
+
+<form id="acp_topfive" method="post" action="{U_ACTION}">
+	<fieldset>
+		<legend>{L_TF_CONFIG}</legend>
+		<dl>
+			<dt><label id="top_five_how_many" for="top_five_how_many">{L_TF_HOWMANY}</label><br />{L_TF_HOWMANY_EXPLAIN}</dt>
+			<dd><input type="text" name="top_five_how_many" id="top_five_how_many" size="10" value="{HOWMANY}" /></dd>
+		</dl>
+		<dl>
+			<dt><label id="top_five_ignore_inactive_users" for="top_five_ignore_inactive_users">{L_TF_IGNORE_USERS}</label><br />{L_TF_IGNORE_USERS_EXPLAIN}</dt>
+			<dd><input type="radio" class="radio" name="top_five_ignore_inactive_users" value="1" <!-- IF IGNORE_INACTIVE -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="top_five_ignore_inactive_users" value="0" <!-- IF not IGNORE_INACTIVE -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label id="top_five_ignore_founder" for="top_five_ignore_founder">{L_TF_IGNORE_FOUNDER}</label><br />{L_TF_IGNORE_FOUNDER_EXPLAIN}</dt>
+			<dd><input type="radio" class="radio" name="top_five_ignore_founder" value="1" <!-- IF IGNORE_FOUNDER -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="top_five_ignore_founder" value="0" <!-- IF not IGNORE_FOUNDER -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<dl>
+			<dt><label id="top_five_show_admins_mods" for="top_five_show_admins_mods">{L_TF_SHOW_ADMINS_MODS}</label><br />{L_TF_SHOW_ADMINS_MODS_EXPLAIN}</dt>
+			<dd><input type="radio" class="radio" name="top_five_show_admins_mods" value="1" <!-- IF SHOW_ADMINS_MODS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="top_five_show_admins_mods" value="0" <!-- IF not SHOW_ADMINS_MODS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		{S_FORM_TOKEN}
+		</p>
+	</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

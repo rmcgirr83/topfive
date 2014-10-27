@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Displays statistics of the latest new posts, new users and most active users on the boards index page.",
 	"homepage": "https://github.com/RMcGirr83/php-3.1-ext-topfive",
-	"version": "0.0.1-DEV",
+	"version": "1.0.0",
 	"time": "2014-10-25",
 	"keywords": ["phpbb", "extension", "top five"],
 	"license": "GPL-2.0",

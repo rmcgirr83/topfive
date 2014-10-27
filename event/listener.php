@@ -32,24 +32,40 @@ class listener implements EventSubscriberInterface
 	protected $user;
 	protected $db;
 	protected $cache;
+	protected $config;
 	protected $php_ext;
 	protected $root_path;
 
-	public function __construct(\phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\driver_interface $db, \phpbb\cache\service $cache, $php_ext, $root_path)
+	public function __construct(\phpbb\template\template $template, \phpbb\user $user, \phpbb\db\driver\driver_interface $db, \phpbb\cache\service $cache, \phpbb\config\config $config, $php_ext, $root_path)
 	{
 		$this->template = $template;
 		$this->user = $user;
 		$this->db = $db;
 		$this->cache = $cache;
+		$this->config = $config;
 		$this->php_ext = $php_ext;
 		$this->phpbb_root_path = $root_path;
 	}
 
 	public function main($event)
 	{
-		$this->topposters(5);
-		$this->toptopics(5);
-		$this->newusers(5);
+		$howmany = $this->config['top_five_how_many'];
+		$this->toptopics($howmany);
+		// an array of user types we dont' bother with		
+		$ignore_users = $ignore_founders = array();
+		if ($this->config['top_five_ignore_inactive_users'])
+		{
+			$ignore_users = array(USER_IGNORE, USER_INACTIVE);
+		}
+		
+		if ($this->config['top_five_ignore_founder'])
+		{
+			$ignore_founders = array(USER_FOUNDER);
+		}
+		
+		$ignore_users = array_merge($ignore_users, $ignore_founders);		
+		$this->topposters($howmany, $ignore_users);
+		$this->newusers($howmany, $ignore_users);		
 	}
 
 	public function load_language_on_setup($event)
@@ -62,23 +78,19 @@ class listener implements EventSubscriberInterface
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
-	public function topposters($howmany)
+	public function topposters($howmany, $ignore_users)
 	{
 		global $auth;
-		// top five posters
-		// an array of user types we dont' bother with
-		// could add board founder (USER_FOUNDER) if wanted
-		$ignore_users = array(USER_IGNORE, USER_INACTIVE);
 
 		if (($user_posts = $this->cache->get('_top_five_posters')) === false)
 		{
 			$user_posts = $admin_mod_array = array();
 			// quick check for forum moderators and administrators
 			// some may not want to show them
-			$not_show_admins_mods = false; //change false to true to have moderators and administrators not shown in top five posters
+			$show_admins_mods = $this->config['top_five_show_admins_mods'];
 
 			$sql_and = '';
-			if ($not_show_admins_mods)
+			if (!$show_admins_mods)
 			{
 				// grab all admins
 				$admin_ary = $auth->acl_get_list(false, 'a_', false);
@@ -88,10 +100,9 @@ class listener implements EventSubscriberInterface
 				$mod_ary = $auth->acl_get_list(false,'m_', false);
 				$mod_ary = (!empty($mod_ary[0]['m_'])) ? $mod_ary[0]['m_'] : array();
 				$admin_mod_array = array_unique(array_merge($admin_ary,$mod_ary));
-				var_dump($admin_mod_array);
 				if(sizeof($admin_mod_array))
 				{
-					$sql_and = ' AND ' . $this->db->sql_in_set('u.user_id', $admin_mod_array, true);
+					$sql_and = ' AND ' . $this->db->sql_in_set('user_id', $admin_mod_array, true);
 				}
 			}
 
@@ -238,9 +249,8 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
-	public function newusers($howmany)
+	public function newusers($howmany, $ignore_users)
 	{
-		$ignore_users = array(USER_IGNORE, USER_INACTIVE);
 		// newest registered users
 		if (($newest_users = $this->cache->get('_top_five_newest_users')) === false)
 		{
