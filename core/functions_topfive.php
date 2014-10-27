@@ -30,7 +30,7 @@ class functions_topfive
 
 	/** @var \phpbb\template\template */
 	protected $template;
-	
+
 	/** @var \phpbb\user */
 	protected $user;
 
@@ -52,7 +52,7 @@ class functions_topfive
 		$this->root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 	}
-	
+
 	public function toptopics($tpl_loopname = 'top_five_topic', $howmany)
 	{
 		$show_shadow = false; //change this to false to not show shadow topics
@@ -174,7 +174,7 @@ class functions_topfive
 			));
 		}
 	}
-	
+
 	public function topposters($howmany, $ignore_users)
 	{
 		if (($user_posts = $this->cache->get('_top_five_posters')) === false)
@@ -277,4 +277,3 @@ class functions_topfive
 		}
 	}
 }
-	
