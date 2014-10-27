@@ -45,4 +45,29 @@ class install_top_five extends \phpbb\db\migration\migration
 			)),
 		);
 	}
+	
+	public function revert_data()
+	{
+		return array(
+			array('config.remove', array('top_five_how_many')),
+			array('config.remove', array('top_five_ignore_inactive_users')),
+			array('config.remove', array('top_five_ignore_founder')),
+			array('config.remove', array('top_five_show_admins_mods')),
+			array('config.remove', array('top_five_version')),
+
+			array('module.remove', array(
+				'acp',
+				'TF_ACP',
+				array(
+					'module_basename'	=> '\rmcgirr83\topfive\acp\topfive_module',
+					'modes'				=> array('settings'),
+				),
+			)),
+			array('module.remove', array(
+				'acp',
+				'ACP_CAT_DOT_MODS',
+				'TF_ACP'
+			)),
+		);
+	}	
 }

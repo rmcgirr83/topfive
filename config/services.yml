@@ -1,13 +1,19 @@
 services:
+    rmcgirr83.topfive.functions:
+        class: rmcgirr83\topfive\core\functions_topfive
+        arguments:
+            - @auth
+            - @config
+            - @cache
+            - @dbal.conn
+            - @dispatcher
+            - @template
+            - @user
+            - %core.root_path%
+            - %core.php_ext%
     rmcgirr83.topfive.listener:
         class: rmcgirr83\topfive\event\listener
         arguments:
-            - @template
-            - @user
-            - @dbal.conn
-            - @cache
-            - @config
-            - %core.php_ext%
-            - %core.root_path%
+            - @rmcgirr83.topfive.functions
         tags:
             - { name: event.listener }
