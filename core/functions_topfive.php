@@ -25,7 +25,7 @@ class functions_topfive
 	/** @var \phpbb\db\driver\driver */
 	protected $db;
 
-	/** @var \phpbb\event\dispatcher */
+	/** @var \phpbb\event\dispatcher_interface */
 	protected $dispatcher;
 
 	/** @var \phpbb\template\template */
@@ -40,7 +40,7 @@ class functions_topfive
 	/** @var string PHP extension */
 	protected $php_ext;
 
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\cache\service $cache, \phpbb\db\driver\driver_interface $db, \phpbb\event\dispatcher $dispatcher, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\cache\service $cache, \phpbb\db\driver\driver_interface $db, \phpbb\event\dispatcher_interface $dispatcher, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
