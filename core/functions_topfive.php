@@ -25,12 +25,12 @@ class functions_topfive
 	/** @var \phpbb\db\driver\driver */
 	protected $db;
 
-	/** @var \phpbb\event\dispatcher */
+	/** @var \phpbb\event\dispatcher_interface */
 	protected $dispatcher;
 
 	/** @var \phpbb\template\template */
 	protected $template;
-	
+
 	/** @var \phpbb\user */
 	protected $user;
 
@@ -40,7 +40,7 @@ class functions_topfive
 	/** @var string PHP extension */
 	protected $php_ext;
 
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\cache\service $cache, \phpbb\db\driver\driver_interface $db, \phpbb\event\dispatcher $dispatcher, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\cache\service $cache, \phpbb\db\driver\driver_interface $db, \phpbb\event\dispatcher_interface $dispatcher, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
@@ -52,7 +52,7 @@ class functions_topfive
 		$this->root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 	}
-	
+
 	public function toptopics($tpl_loopname = 'top_five_topic', $howmany)
 	{
 		$show_shadow = false; //change this to false to not show shadow topics
@@ -108,7 +108,7 @@ class functions_topfive
 
 			// grab all posts that meet criteria and auths
 			$sql_array = array(
-				'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name',
+				'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name',
 				'FROM'		=> array(TOPICS_TABLE => 't'),
 				'LEFT_JOIN'	=> array(
 					array(
@@ -122,12 +122,12 @@ class functions_topfive
 			/**
 			* Event to modify the SQL query before the topics data is retrieved
 			*
-			* @event topfive.sql_pull_topics_data
+			* @event rmcgirr83.topfive.sql_pull_topics_data
 			* @var	array	sql_array		The SQL array
 			* @since 1.0.0
 			*/
 			$vars = array('sql_array');
-			extract($this->dispatcher->trigger_event('topfive.sql_pull_topics_data', compact($vars)));
+			extract($this->dispatcher->trigger_event('rmcgirr83.topfive.sql_pull_topics_data', compact($vars)));
 
 			$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
 			while( $row = $this->db->sql_fetchrow($result) )
@@ -154,13 +154,13 @@ class functions_topfive
 				/**
 				* Modify the topic data before it is assigned to the template
 				*
-				* @event topfive.modify_tpl_ary
+				* @event rmcgirr83.topfive.modify_tpl_ary
 				* @var	array	row			Array with topic data
 				* @var	array	tpl_ary		Template block array with topic data
 				* @since 1.0.0
 				*/
 				$vars = array('row', 'tpl_ary');
-				extract($this->dispatcher->trigger_event('topfive.modify_tpl_ary', compact($vars)));
+				extract($this->dispatcher->trigger_event('rmcgirr83.topfive.modify_tpl_ary', compact($vars)));
 
 				$this->template->assign_block_vars($tpl_loopname, $tpl_ary);
 			}
@@ -174,7 +174,7 @@ class functions_topfive
 			));
 		}
 	}
-	
+
 	public function topposters($howmany, $ignore_users)
 	{
 		if (($user_posts = $this->cache->get('_top_five_posters')) === false)
@@ -277,4 +277,3 @@ class functions_topfive
 		}
 	}
 }
-	
