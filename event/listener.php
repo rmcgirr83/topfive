@@ -26,7 +26,7 @@ class listener implements EventSubscriberInterface
 	{
 		$this->tf_functions = $functions;
 	}
-	
+
 	static public function getSubscribedEvents()
 	{
 		return array(
@@ -55,7 +55,7 @@ class listener implements EventSubscriberInterface
 		$ignore_users = array_merge($ignore_users, $ignore_founders);
 		$this->tf_functions->topposters($howmany, $ignore_users);
 		$this->tf_functions->newusers($howmany, $ignore_users);
-		$this->tf_functions->toptopics('top_five_topic', $howmany);
+		$this->tf_functions->toptopics($howmany, 'top_five_topic');
 	}
 
 	public function load_language_on_setup($event)

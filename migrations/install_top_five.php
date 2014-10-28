@@ -45,7 +45,7 @@ class install_top_five extends \phpbb\db\migration\migration
 			)),
 		);
 	}
-	
+
 	public function revert_data()
 	{
 		return array(
@@ -69,5 +69,5 @@ class install_top_five extends \phpbb\db\migration\migration
 				'TF_ACP'
 			)),
 		);
-	}	
+	}
 }

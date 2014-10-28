@@ -53,7 +53,7 @@ class functions_topfive
 		$this->php_ext = $php_ext;
 	}
 
-	public function toptopics($tpl_loopname = 'top_five_topic', $howmany)
+	public function toptopics($howmany, $tpl_loopname = 'top_five_topic')
 	{
 		$show_shadow = false; //change this to false to not show shadow topics
 		$sql_and = !$show_shadow ? ' AND topic_status <> ' . ITEM_MOVED : '';

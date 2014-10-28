@@ -19,6 +19,3 @@ git clone https://github.com/RMcGirr83/php-3.1-ext-topfive.git ext/rmcgirr83/top
 ### 2. activate
 Go to admin panel -> tab customise -> Manage extensions -> enable Top Five
 
-## Support
-
-
