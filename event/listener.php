@@ -26,7 +26,7 @@ class listener implements EventSubscriberInterface
 	{
 		$this->tf_functions = $functions;
 	}
-	
+
 	static public function getSubscribedEvents()
 	{
 		return array(
@@ -37,7 +37,7 @@ class listener implements EventSubscriberInterface
 
 	public function main($event)
 	{
-		
+
 		$this->tf_functions->topposters();
 		$this->tf_functions->newusers();
 		$this->tf_functions->toptopics();
