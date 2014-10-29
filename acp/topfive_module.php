@@ -47,6 +47,10 @@ class topfive_module
 				$config->set('top_five_ignore_inactive_users', $request->variable('top_five_ignore_inactive_users', true));
 				$config->set('top_five_ignore_founder', $request->variable('top_five_ignore_founder', true));
 				$config->set('top_five_show_admins_mods', $request->variable('top_five_show_admins_mods', true));
+
+				$cache->destroy('_top_five_newest_users');
+				$cache->destroy('_top_five_posters');
+
 				trigger_error($user->lang['TF_SAVED'] . adm_back_link($this->u_action));
 			}
 		}

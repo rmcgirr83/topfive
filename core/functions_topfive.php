@@ -53,8 +53,10 @@ class functions_topfive
 		$this->php_ext = $php_ext;
 	}
 
-	public function toptopics($howmany, $tpl_loopname = 'top_five_topic')
+	public function toptopics($tpl_loopname = 'top_five_topic')
 	{
+
+		$howmany = $this->howmany();
 		$show_shadow = false; //change this to false to not show shadow topics
 		$sql_and = !$show_shadow ? ' AND topic_status <> ' . ITEM_MOVED : '';
 
@@ -175,8 +177,11 @@ class functions_topfive
 		}
 	}
 
-	public function topposters($howmany, $ignore_users)
+	public function topposters()
 	{
+		$howmany = $this->howmany();
+		$ignore_users = $this->ignore_users();
+
 		if (($user_posts = $this->cache->get('_top_five_posters')) === false)
 		{
 			$user_posts = $admin_mod_array = array();
@@ -236,8 +241,12 @@ class functions_topfive
 		}
 	}
 
-	public function newusers($howmany, $ignore_users)
+	public function newusers()
 	{
+
+		$howmany = $this->howmany();
+		$ignore_users = $this->ignore_users();
+
 		// newest registered users
 		if (($newest_users = $this->cache->get('_top_five_newest_users')) === false)
 		{
@@ -275,5 +284,31 @@ class functions_topfive
 				'USERNAME_FULL'		=> $username_string,
 			));
 		}
+	}
+
+	public function howmany()
+	{
+		$howmany = $this->config['top_five_how_many'];
+
+		return (int) $howmany;
+	}
+
+	public function ignore_users()
+	{
+		// an array of user types we dont' bother with
+		$ignore_users = $ignore_founders = array();
+		if ($this->config['top_five_ignore_inactive_users'])
+		{
+			$ignore_users = array(USER_IGNORE, USER_INACTIVE);
+		}
+
+		if ($this->config['top_five_ignore_founder'])
+		{
+			$ignore_founders = array(USER_FOUNDER);
+		}
+
+		$ignore_users = array_merge($ignore_users, $ignore_founders);
+
+		return $ignore_users;
 	}
 }
