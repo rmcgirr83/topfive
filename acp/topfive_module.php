@@ -41,6 +41,10 @@ class topfive_module
 			$check_row = array('top_five_how_many' => $request->variable('top_five_how_many', 0));
 			$validate_row = array('top_five_how_many' => array('num', false, 5, 100));
 			$error = validate_data($check_row, $validate_row);
+			
+			// Replace "error" strings with their real, localised form
+			$error = preg_replace('#^([A-Z_]+)$#e', "(!empty(\$user->lang['\\1'])) ? \$user->lang['\\1'] : '\\1'", $error);
+
 			if (!sizeof($error))
 			{
 				$config->set('top_five_how_many', $request->variable('top_five_how_many', 0));
@@ -56,14 +60,14 @@ class topfive_module
 		}
 
 		$template->assign_vars(array(
-			'TF_ERROR'	=> isset($error) ? ((sizeof($error)) ? implode('<br />', $error) : '') : '',
-			'HOWMANY'	=> (!empty($this->config['top_five_how_many'])) ? $this->config['top_five_how_many'] : 0,
+			'TF_ERROR'			=> isset($error) ? ((sizeof($error)) ? implode('<br />', $error) : '') : '',
+			'HOWMANY'			=> (!empty($this->config['top_five_how_many'])) ? $this->config['top_five_how_many'] : 0,
 			'IGNORE_INACTIVE'	=> (!empty($this->config['top_five_ignore_inactive_users'])) ? true : false,
-			'IGNORE_FOUNDER'		=> (!empty($this->config['top_five_ignore_founder'])) ? true : false,
-			'SHOW_ADMINS_MODS'		=> (!empty($this->config['top_five_show_admins_mods'])) ? true : false,
-			'TF_VERSION'	=> $this->config['top_five_version'],
+			'IGNORE_FOUNDER'	=> (!empty($this->config['top_five_ignore_founder'])) ? true : false,
+			'SHOW_ADMINS_MODS'	=> (!empty($this->config['top_five_show_admins_mods'])) ? true : false,
+			'TF_VERSION'		=> $this->config['top_five_version'],
 
-			'U_ACTION'		=> $this->u_action,
+			'U_ACTION'			=> $this->u_action,
 		));
 	}
 }
