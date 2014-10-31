@@ -41,7 +41,7 @@ class topfive_module
 			$check_row = array('top_five_how_many' => $request->variable('top_five_how_many', 0));
 			$validate_row = array('top_five_how_many' => array('num', false, 5, 100));
 			$error = validate_data($check_row, $validate_row);
-			
+
 			// Replace "error" strings with their real, localised form
 			$error = preg_replace('#^([A-Z_]+)$#e', "(!empty(\$user->lang['\\1'])) ? \$user->lang['\\1'] : '\\1'", $error);
 
