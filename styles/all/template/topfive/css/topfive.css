@@ -1,0 +1,14 @@
+#tf_new_posts {
+	width: 50%;
+	text-align:left;
+}
+
+#tf_most_active {
+	width: 20%;
+	text-align:left;
+}
+
+#tf_newest {
+	width: 30%;
+	text-align:left;
+}
