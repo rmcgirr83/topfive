@@ -22,9 +22,13 @@ class listener implements EventSubscriberInterface
 	/* @var \rmcgirr83\topfive\core\functions_topfive */
 	protected $tf_functions;
 
-	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions)
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions, \phpbb\template\template $template)
 	{
 		$this->tf_functions = $functions;
+		$this->template = $template;
 	}
 
 	static public function getSubscribedEvents()
@@ -37,10 +41,13 @@ class listener implements EventSubscriberInterface
 
 	public function main($event)
 	{
-
 		$this->tf_functions->topposters();
 		$this->tf_functions->newusers();
 		$this->tf_functions->toptopics();
+
+		$this->template->assign_vars(array(
+			'S_TOPFIVE'	=>true,
+		));
 	}
 
 	public function load_language_on_setup($event)
