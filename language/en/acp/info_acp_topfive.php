@@ -34,9 +34,13 @@ $lang = array_merge($lang, array(
 	'TF_IGNORE_USERS_EXPLAIN'	=> 'Will exclude inactive users from the display in top posters and newest users',
 	'TF_IGNORE_FOUNDER'		=> 'Ignore Founder(s)',
 	'TF_IGNORE_FOUNDER_EXPLAIN'	=> 'Will exclude founders from the display in top posters and newest users',
+	'TF_LOCATION'	=> 'Location on forum',
+	'TF_LOCATION_EXPLAIN'	=> 'Where do you want the mod to display on the index page',
 	'TF_SHOW_ADMINS_MODS'	=> 'Include Admins and Mods',
 	'TF_SHOW_ADMINS_MODS_EXPLAIN'	=> 'Will display admins and mods in top posters',
 	'TOO_SMALL_TOP_FIVE_HOW_MANY'	=> 'The number to display value is too small.',
 	'TOO_LARGE_TOP_FIVE_HOW_MANY'	=> 'The number to display value is too large.',
+	'TOP_OF_FORUM'	=> 'Top of Forum',
+	'BOTTOM_OF_FORUM'	=> 'Bottom of Forum',
 
 ));

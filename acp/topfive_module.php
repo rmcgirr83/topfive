@@ -51,6 +51,7 @@ class topfive_module
 				$config->set('top_five_ignore_inactive_users', $request->variable('top_five_ignore_inactive_users', true));
 				$config->set('top_five_ignore_founder', $request->variable('top_five_ignore_founder', true));
 				$config->set('top_five_show_admins_mods', $request->variable('top_five_show_admins_mods', true));
+				$config->set('top_five_location', $request->variable('top_five_location', true));
 
 				$cache->destroy('_top_five_newest_users');
 				$cache->destroy('_top_five_posters');
@@ -65,6 +66,7 @@ class topfive_module
 			'IGNORE_INACTIVE'	=> (!empty($this->config['top_five_ignore_inactive_users'])) ? true : false,
 			'IGNORE_FOUNDER'	=> (!empty($this->config['top_five_ignore_founder'])) ? true : false,
 			'SHOW_ADMINS_MODS'	=> (!empty($this->config['top_five_show_admins_mods'])) ? true : false,
+			'LOCATION'			=> (!empty($this->config['top_five_location'])) ? true : false,
 			'TF_VERSION'		=> $this->config['top_five_version'],
 
 			'U_ACTION'			=> $this->u_action,

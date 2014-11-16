@@ -29,6 +29,7 @@ class install_top_five extends \phpbb\db\migration\migration
 			array('config.add', array('top_five_ignore_founder', 1)),
 			array('config.add', array('top_five_show_admins_mods', 1)),
 			array('config.add', array('top_five_version', '1.0.0')),
+			array('config.add', array('top_five_location', 0)),
 
 			array('module.add', array(
 				'acp',
@@ -54,6 +55,7 @@ class install_top_five extends \phpbb\db\migration\migration
 			array('config.remove', array('top_five_ignore_founder')),
 			array('config.remove', array('top_five_show_admins_mods')),
 			array('config.remove', array('top_five_version')),
+			array('config.remove', array('top_five_location')),
 
 			array('module.remove', array(
 				'acp',

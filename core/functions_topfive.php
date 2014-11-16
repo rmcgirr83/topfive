@@ -57,8 +57,6 @@ class functions_topfive
 	{
 
 		$howmany = $this->howmany();
-		$show_shadow = false; //change this to false to not show shadow topics
-		$sql_and = !$show_shadow ? ' AND topic_status <> ' . ITEM_MOVED : '';
 
 		$forum_ary = array();
 		$forum_read_ary = $this->auth->acl_getf('f_read');
@@ -79,7 +77,8 @@ class functions_topfive
 			*/
 			$sql = 'SELECT forum_id, topic_id, topic_type
 				FROM ' . TOPICS_TABLE . '
-				WHERE ' . $this->db->sql_in_set('forum_id', $forum_ary) . ' ' . $sql_and . '
+				WHERE ' . $this->db->sql_in_set('forum_id', $forum_ary) . ' 
+				AND topic_status <> ' . ITEM_MOVED . '
 				ORDER BY topic_last_post_time DESC';
 
 			$result = $this->db->sql_query_limit($sql, $howmany);
@@ -180,16 +179,19 @@ class functions_topfive
 	public function topposters()
 	{
 		$howmany = $this->howmany();
-		$ignore_users = $this->ignore_users();
+		$sql_where = $this->ignore_users();
+
+		//set two variables for the sql
+		$sql_and = $sql_other = '';
 
 		if (($user_posts = $this->cache->get('_top_five_posters')) === false)
 		{
+
 			$user_posts = $admin_mod_array = array();
 			// quick check for forum moderators and administrators
 			// some may not want to show them
 			$show_admins_mods = $this->config['top_five_show_admins_mods'];
 
-			$sql_and = '';
 			if (!$show_admins_mods)
 			{
 				// grab all admins
@@ -202,15 +204,15 @@ class functions_topfive
 				$admin_mod_array = array_unique(array_merge($admin_ary,$mod_ary));
 				if(sizeof($admin_mod_array))
 				{
-					$sql_and = ' AND ' . $this->db->sql_in_set('user_id', $admin_mod_array, true);
+					$sql_and = empty($sql_where) ? ' WHERE ' . $this->db->sql_in_set('user_id', $admin_mod_array, true) : ' AND ' . $this->db->sql_in_set('user_id', $admin_mod_array, true);
 				}
 			}
-
+			$sql_other = (empty($sql_and) && empty($sql_where)) ? ' WHERE user_posts <> 0 ' : ' AND user_posts <> 0';
 			// do the main sql query
 			$sql = 'SELECT user_id, username, user_colour, user_posts
 				FROM ' . USERS_TABLE . '
-				WHERE ' . $this->db->sql_in_set('user_type', $ignore_users, true) . ' ' . $sql_and . '
-				AND user_posts <> 0
+				 ' . $sql_where . ' ' . $sql_and . '
+				' . $sql_other . '
 				ORDER BY user_posts DESC';
 
 			$result = $this->db->sql_query_limit($sql, $howmany);
@@ -245,8 +247,9 @@ class functions_topfive
 	{
 
 		$howmany = $this->howmany();
-		$ignore_users = $this->ignore_users();
+		$sql_where = $this->ignore_users();
 
+		$sql_and = !empty($sql_where) ? ' AND user_inactive_reason = 0' : ' WHERE user_inactive_reason = 0';
 		// newest registered users
 		if (($newest_users = $this->cache->get('_top_five_newest_users')) === false)
 		{
@@ -255,8 +258,8 @@ class functions_topfive
 			// grab most recent registered users
 			$sql = 'SELECT user_id, username, user_colour, user_regdate
 				FROM ' . USERS_TABLE . '
-				WHERE ' . $this->db->sql_in_set('user_type', $ignore_users, true) . '
-					AND user_inactive_reason = 0
+				' . $sql_where . '
+				' . $sql_and . '
 				ORDER BY user_regdate DESC';
 			$result = $this->db->sql_query_limit($sql, $howmany);
 
@@ -271,8 +274,8 @@ class functions_topfive
 			}
 			$this->db->sql_freeresult($result);
 
-			// cache this data for ever, cache is purged when adding or deleting users
-			$this->cache->put('_top_five_newest_users', $newest_users);
+			// cache this data for 5 minutes, this improves performance
+			$this->cache->put('_top_five_newest_users', $newest_users, 300);
 		}
 
 		foreach ($newest_users as $row)
@@ -286,14 +289,14 @@ class functions_topfive
 		}
 	}
 
-	public function howmany()
+	private function howmany()
 	{
 		$howmany = $this->config['top_five_how_many'];
 
 		return (int) $howmany;
 	}
 
-	public function ignore_users()
+	private function ignore_users()
 	{
 		// an array of user types we dont' bother with
 		$ignore_users = $ignore_founders = array();
@@ -309,6 +312,13 @@ class functions_topfive
 
 		$ignore_users = array_merge($ignore_users, $ignore_founders);
 
-		return $ignore_users;
+		// Do we have anyone we want to ignore
+		$sql_where = '';
+		if (sizeof($ignore_users))
+		{
+			$sql_where = 'WHERE ' . $this->db->sql_in_set('user_type', $ignore_users, true);
+		}
+
+		return $sql_where;
 	}
 }

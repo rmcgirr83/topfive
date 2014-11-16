@@ -22,12 +22,16 @@ class listener implements EventSubscriberInterface
 	/* @var \rmcgirr83\topfive\core\functions_topfive */
 	protected $tf_functions;
 
+	/** @var \phpbb\config\config */
+	protected $config;
+
 	/** @var \phpbb\template\template */
 	protected $template;
 
-	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions, \phpbb\template\template $template)
+	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions, \phpbb\config\config $config, \phpbb\template\template $template)
 	{
 		$this->tf_functions = $functions;
+		$this->config = $config;
 		$this->template = $template;
 	}
 
@@ -46,7 +50,8 @@ class listener implements EventSubscriberInterface
 		$this->tf_functions->toptopics();
 
 		$this->template->assign_vars(array(
-			'S_TOPFIVE'	=>true,
+			'S_TOPFIVE'	=>	true,
+			'S_TOPFIVE_LOCATION'	=> $this->config['top_five_location'],
 		));
 	}
 

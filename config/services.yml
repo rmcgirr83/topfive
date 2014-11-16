@@ -15,6 +15,7 @@ services:
         class: rmcgirr83\topfive\event\listener
         arguments:
             - @rmcgirr83.topfive.functions
+            - @config
             - @template
         tags:
             - { name: event.listener }

@@ -13,6 +13,11 @@
 	<fieldset>
 		<legend>{L_TF_CONFIG}</legend>
 		<dl>
+			<dt><label id="top_five_location" for="top_five_location">{L_TF_LOCATION}</label><br />{L_TF_LOCATION_EXPLAIN}</dt>
+			<dd><input type="radio" class="radio" name="top_five_location" value="1" <!-- IF LOCATION -->checked="checked"<!-- ENDIF -->/> {L_TOP_OF_FORUM} &nbsp;
+				<input type="radio" class="radio" name="top_five_location" value="0" <!-- IF not LOCATION -->checked="checked"<!-- ENDIF --> /> {L_BOTTOM_OF_FORUM}</dd>
+		</dl>
+		<dl>
 			<dt><label id="top_five_how_many" for="top_five_how_many">{L_TF_HOWMANY}</label><br />{L_TF_HOWMANY_EXPLAIN}</dt>
 			<dd><input type="text" name="top_five_how_many" id="top_five_how_many" size="10" value="{HOWMANY}" /></dd>
 		</dl>
