@@ -50,7 +50,7 @@ class listener implements EventSubscriberInterface
 		$this->tf_functions->toptopics();
 
 		$this->template->assign_vars(array(
-			'S_TOPFIVE'	=>	true,
+			'S_TOPFIVE'	=>	$this->config['top_five_active'],
 			'S_TOPFIVE_LOCATION'	=> $this->config['top_five_location'],
 		));
 	}

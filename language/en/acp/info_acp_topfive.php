@@ -22,6 +22,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	// ACP
 	'TF_ACP'		=> 'Top Five Extension',
+	'TF_ACTIVE'		=> 'Enabled',
 	'TF_TITLE'		=> 'Top Five Extension Settings',
 	'TF_VERSION'	=> 'Top Five Version',
 	'TOPFIVE_MOD'	=> 'Top Five',

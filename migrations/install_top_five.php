@@ -30,6 +30,7 @@ class install_top_five extends \phpbb\db\migration\migration
 			array('config.add', array('top_five_show_admins_mods', 1)),
 			array('config.add', array('top_five_version', '1.0.0')),
 			array('config.add', array('top_five_location', 0)),
+			array('config.add', array('top_five_active', 0)),
 
 			array('module.add', array(
 				'acp',
