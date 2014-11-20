@@ -37,6 +37,10 @@ class listener implements EventSubscriberInterface
 
 	static public function getSubscribedEvents()
 	{
+		if (!$this->config['top_five_active'])
+		{
+			return;
+		}
 		return array(
 			'core.user_setup' => 'load_language_on_setup',
 			'core.index_modify_page_title'	=> 'main',
