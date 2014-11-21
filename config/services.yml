@@ -5,6 +5,7 @@ services:
             - @auth
             - @config
             - @cache
+            - @content.visibility
             - @dbal.conn
             - @dispatcher
             - @template

@@ -22,6 +22,9 @@ class functions_topfive
 	/** @var \phpbb\cache\driver\driver_interface */
 	protected $cache;
 
+	/** @var \phpbb\content_visibility */
+	protected $content_visibility;
+
 	/** @var \phpbb\db\driver\driver */
 	protected $db;
 
@@ -40,11 +43,12 @@ class functions_topfive
 	/** @var string PHP extension */
 	protected $php_ext;
 
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\cache\service $cache, \phpbb\db\driver\driver_interface $db, \phpbb\event\dispatcher_interface $dispatcher, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\cache\service $cache, \phpbb\content_visibility $content_visibility, \phpbb\db\driver\driver_interface $db, \phpbb\event\dispatcher_interface $dispatcher, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
 		$this->cache = $cache;
+		$this->content_visibility = $content_visibility;
 		$this->db = $db;
 		$this->dispatcher = $dispatcher;
 		$this->template = $template;
@@ -77,7 +81,8 @@ class functions_topfive
 			*/
 			$sql = 'SELECT forum_id, topic_id, topic_type
 				FROM ' . TOPICS_TABLE . '
-				WHERE ' . $this->db->sql_in_set('forum_id', $forum_ary) . ' 
+				WHERE ' . $this->db->sql_in_set('forum_id', $forum_ary) . '
+				AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $forum_ary) . '
 				AND topic_status <> ' . ITEM_MOVED . '
 				ORDER BY topic_last_post_time DESC';
 
