@@ -22,6 +22,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	// ACP
 	'TF_ACP'		=> 'Extensión Top Cinco',
+	'TF_ACTIVE'		=> 'Habilitado',
 	'TF_TITLE'		=> 'Ajustes de la extensión Top Cinco',
 	'TF_VERSION'	=> 'Versión de Top Cinco',
 	'TOPFIVE_MOD'	=> 'Top Cinco',
@@ -34,9 +35,13 @@ $lang = array_merge($lang, array(
 	'TF_IGNORE_USERS_EXPLAIN'	=> 'Se excluyen los usuarios inactivos al mostrar en el TOP Posteadores y nuevos usuarios',
 	'TF_IGNORE_FOUNDER'		=> 'Ignorar Fundador(es)',
 	'TF_IGNORE_FOUNDER_EXPLAIN'	=> 'Se excluyen los Fundadores al mostrar en el TOP Posteadores y nuevos usuarios',
+	'TF_LOCATION'	=> 'Ubicación en el foro',
+	'TF_LOCATION_EXPLAIN'	=> 'Donde desea mostrar la extensión de la página índice',
 	'TF_SHOW_ADMINS_MODS'	=> 'Incluir Administradores y Moderadores',
 	'TF_SHOW_ADMINS_MODS_EXPLAIN'	=> 'Mostrará los Administradores y Moderadores en el TOP Posteadores',
 	'TOO_SMALL_TOP_FIVE_HOW_MANY'	=> 'El valor del número a mostrar es demasiado pequeño.',
 	'TOO_LARGE_TOP_FIVE_HOW_MANY'	=> 'El valor del número a mostrar es demasiado grande.',
+	'TOP_OF_FORUM'	=> 'Parte superior del foro',
+	'BOTTOM_OF_FORUM'	=> 'Parte inferior del foro',
 
 ));
