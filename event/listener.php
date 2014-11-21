@@ -37,10 +37,7 @@ class listener implements EventSubscriberInterface
 
 	static public function getSubscribedEvents()
 	{
-		if (!$this->config['top_five_active'])
-		{
-			return;
-		}
+
 		return array(
 			'core.user_setup' => 'load_language_on_setup',
 			'core.index_modify_page_title'	=> 'main',
@@ -49,6 +46,10 @@ class listener implements EventSubscriberInterface
 
 	public function main($event)
 	{
+		if (!$this->config['top_five_active'])
+		{
+			return;
+		}
 		$this->tf_functions->topposters();
 		$this->tf_functions->newusers();
 		$this->tf_functions->toptopics();
