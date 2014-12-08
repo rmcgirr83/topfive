@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* topfive [English]
+* topfive [Arabic]
 *
 * @package language Top Five
 * @copyright (c) 2014 RMcGirr83
