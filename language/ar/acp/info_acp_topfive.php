@@ -23,7 +23,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	// ACP
 	'TF_ACP'		=> 'آخر 5 أنشطة',
-	'TF_ACTIVE'		=> 'تم التفعيل',
+	'TF_ACTIVE'		=> 'تفعيل,
 	'TF_TITLE'		=> 'إعدادات إضافة "آخر 5 أنشطة"',
 	'TF_VERSION'	=> 'إصدار النسخة :',
 	'TOPFIVE_MOD'	=> 'آخر 5 أنشطة',
