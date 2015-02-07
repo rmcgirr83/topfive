@@ -1,47 +1,37 @@
-<div class="forabg">
+<div class="forabg" id="top_five">
 	<div class="inner">
-		<table class="table1" cellspacing="1" id="top_five">
-			<thead>
-			<tr>
-				<th id="tf_new_posts">{L_NEWEST_TOPICS}</th>
-				<th id="tf_most_active">{L_TOP_FIVE_ACTIVE}</th>
-				<th id="tf_newest">{L_TOP_FIVE_NEWEST}</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr class="bg2">
-				<td>
-					<ul>
-					<!-- BEGIN top_five_topic -->
-						<li>
-							<!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}">{top_five_topic.MINI_POST_IMG}</a> <a class="topictitle" href="{top_five_topic.U_TOPIC}">{top_five_topic.TOPIC_TITLE}</a>
-							<span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME}<!-- EVENT topiclist_row_append --><!-- ENDIF --></span>
-						</li>
-					<!-- END top_five_topic -->
-					</ul>
-				</td>
-				<td>
-					<ul>
+	<ul class="topiclist">
+		<li class="header">
+			<dl>
+				<dt><div class="list-inner">{L_NEWEST_TOPICS}</div></dt>
+				<dd class="topics tf-active-header">{L_TOP_FIVE_ACTIVE}</dd>
+				<dd class="lastpost"><span>{L_TOP_FIVE_NEWEST}</span></dd>
+			</dl>
+		</li>
+	</ul>
+	<ul class="topiclist forums">
+		<li class="row">
+			<dl>
+				<dt>
+					<div class="list-inner tf-new-posts">
+						<!-- BEGIN top_five_topic -->
+						<!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a>&nbsp;{L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}" class="topictitle">{top_five_topic.FORUM_NAME}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME}<!-- EVENT top_five_topiclist_row_append --><!-- ENDIF --></span>
+						<!-- END top_five_topic -->
+					</div>
+				</dt>
+				<dd class="topics tf-most-active">
 					<!-- BEGIN top_five_active -->
-						<li>
-							{top_five_active.USERNAME_FULL}
-							<span class="meta">{L_POSTS}{L_COLON} <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a></span>
-						</li>
+					<span class="meta">{top_five_active.USERNAME_FULL}<span class="meta">{L_POSTS}{L_COLON} <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a></span></span>
 					<!-- END top_five_active -->
-					</ul>
-				</td>
-				<td>
-					<ul>
+				</dd>
+				<dd class="lastpost tf-newest">
 					<!-- BEGIN top_five_newest -->
-						<li>
-							{top_five_newest.USERNAME_FULL}
-							<span class="meta">{L_JOINED}{L_COLON} {top_five_newest.REG_DATE}</span>
-						</li>
+					<span class="meta">{top_five_newest.USERNAME_FULL}
+					<span class="meta">{L_JOINED}{L_COLON} {top_five_newest.REG_DATE}</span></span>
 					<!-- END top_five_newest -->
-					</ul>
-				</td>
-			</tr>
-			</tbody>
-		</table>
+				</dd>
+			</dl>
+		</li>
+	</ul>
 	</div>
 </div>

@@ -1,0 +1,53 @@
+.tf-new-posts {
+	text-align: left;
+	margin-right: 0px;
+}
+
+dd.tf-most-active {
+	font-size: 1.2em;
+	line-height: 1.3em;
+	text-align: left;
+	margin-top: -5px;
+	width: 185px;
+}
+
+dd.tf-newest {
+	font-size: 1.2em;
+	line-height: 1.3em;
+	text-align: left;
+	margin-top: -5px;
+}
+
+dd.tf-active-header {
+	width: 185px;
+}
+
+#top_five ul {
+	list-style-type: none;
+}
+
+#top_five li {
+	padding: 2px 0;
+}
+
+#top_five li:first-child {
+	padding-top: 0;
+}
+
+#top_five li:last-child {
+	padding-bottom: 0;
+}
+
+#top_five .meta {
+	display: block;
+	padding-left: 8px;
+}
+
+.rtl #top_five {
+	text-align: right;
+}
+
+.rtl #top_five .meta {
+	padding-left: 0;
+	padding-right: 8px;
+}

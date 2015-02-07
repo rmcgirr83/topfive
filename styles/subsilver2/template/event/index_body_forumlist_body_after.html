@@ -1,15 +1,3 @@
 <!-- IF S_TOPFIVE and not S_TOPFIVE_LOCATION -->
-<br clear="all" />
-<table class="tablebg" width="100%" cellspacing="1">
-		<tr>
-			<td id="tf_new_posts" class="cat"><h4>{L_NEWEST_TOPICS}</h4></td>
-			<td id="tf_most_active" class="cat"><h4>{L_TOP_FIVE_ACTIVE}</h4></td>
-			<td id="tf_newest" class="cat"><h4>{L_TOP_FIVE_NEWEST}</h4></td>
-		</tr>
-		<tr>
-			<td class="row1" valign="top"><!-- BEGIN top_five_topic --><span class="genmed"><!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}">{top_five_topic.MINI_POST_IMG} {top_five_topic.TOPIC_TITLE}</a>&nbsp;{top_five_topic.USERNAME_FULL}&nbsp;{top_five_topic.LAST_TOPIC_TIME}</span><br /><!-- ENDIF --><!-- END top_five_topic --></td>
-			<td class="row1" valign="top"><!-- BEGIN top_five_active --><span class="genmed">{top_five_active.USERNAME_FULL} {L_POSTS}: <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a></span><br /><!-- END top_five_active --></td>
-			<td class="row1" valign="top"><!-- BEGIN top_five_newest --><span class="genmed">{top_five_newest.USERNAME_FULL} {L_JOINED}: {top_five_newest.REG_DATE}</span><br /><!-- END top_five_newest --></td>
-		</tr>
-</table>
+	<!-- INCLUDE topfive_body.html -->
 <!-- ENDIF -->

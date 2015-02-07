@@ -1,0 +1,47 @@
+<div class="forabg">
+	<div class="inner">
+		<table class="table1" cellspacing="1" id="top_five">
+			<thead>
+			<tr>
+				<th id="tf_new_posts">{L_NEWEST_TOPICS}</th>
+				<th id="tf_most_active">{L_TOP_FIVE_ACTIVE}</th>
+				<th id="tf_newest">{L_TOP_FIVE_NEWEST}</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr class="bg2">
+				<td>
+					<ul>
+					<!-- BEGIN top_five_topic -->
+						<li>
+							<!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a>
+							<span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME}<!-- EVENT topiclist_row_append --><!-- ENDIF --></span>
+						</li>
+					<!-- END top_five_topic -->
+					</ul>
+				</td>
+				<td>
+					<ul>
+					<!-- BEGIN top_five_active -->
+						<li>
+							{top_five_active.USERNAME_FULL}
+							<span class="meta">{L_POSTS}{L_COLON} <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a></span>
+						</li>
+					<!-- END top_five_active -->
+					</ul>
+				</td>
+				<td>
+					<ul>
+					<!-- BEGIN top_five_newest -->
+						<li>
+							{top_five_newest.USERNAME_FULL}
+							<span class="meta">{L_JOINED}{L_COLON} {top_five_newest.REG_DATE}</span>
+						</li>
+					<!-- END top_five_newest -->
+					</ul>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

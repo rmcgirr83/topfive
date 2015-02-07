@@ -114,12 +114,16 @@ class functions_topfive
 
 			// grab all posts that meet criteria and auths
 			$sql_array = array(
-				'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name',
+				'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
 				'FROM'		=> array(TOPICS_TABLE => 't'),
 				'LEFT_JOIN'	=> array(
 					array(
 						'FROM'	=> array(USERS_TABLE => 'u'),
 						'ON'	=> 't.topic_last_poster_id = u.user_id',
+					),
+					array(
+						'FROM'	=> array(FORUMS_TABLE => 'f'),
+						'ON'	=> 't.forum_id = f.forum_id',
 					),
 				),
 				'WHERE'		=> $this->db->sql_in_set('t.topic_id', $topic_ids),
@@ -140,9 +144,11 @@ class functions_topfive
 			{
 				$topic_id = $row['topic_id'];
 				$forum_id = $row['forum_id'];
+				$forum_name = $row['forum_name'];
 
 				$post_unread = (isset($topic_tracking_info[$forum_id][$topic_id]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$topic_id]) ? true : false;
 				$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
+				$forum_name_url = append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
 				$topic_title = censor_text($row['topic_title']);
 				if (utf8_strlen($topic_title) >= 60)
 				{
@@ -152,10 +158,12 @@ class functions_topfive
 
 				$tpl_ary = array(
 					'U_TOPIC'			=> $view_topic_url,
-					'MINI_POST_IMG'		=> ($post_unread) ? $this->user->img('icon_post_target_unread', 'NEW_POST') : $this->user->img('icon_post_target', 'POST'),
+					'U_FORUM'			=> $forum_name_url,
+					'S_UNREAD'			=> ($post_unread) ? true : false,
 					'USERNAME_FULL'		=> $is_guest ? $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 					'LAST_TOPIC_TIME'	=> $this->user->format_date($row['topic_last_post_time']),
 					'TOPIC_TITLE' 		=> $topic_title,
+					'FORUM_NAME'		=> $forum_name,
 				);
 				/**
 				* Modify the topic data before it is assigned to the template
