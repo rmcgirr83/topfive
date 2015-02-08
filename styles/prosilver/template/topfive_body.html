@@ -15,7 +15,7 @@
 				<dt>
 					<div class="list-inner tf-new-posts">
 						<!-- BEGIN top_five_topic -->
-						<!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a>&nbsp;{L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}" class="topictitle">{top_five_topic.FORUM_NAME}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME}<!-- EVENT rmcgirr83_top_five_topiclist_row_append --><!-- ENDIF --></span>
+						<!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}" class="subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a>&nbsp;{L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME}<!-- EVENT top_five_topiclist_row_append --><!-- ENDIF --></span>
 						<!-- END top_five_topic -->
 					</div>
 				</dt>

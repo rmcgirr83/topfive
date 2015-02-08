@@ -1,21 +1,20 @@
 .tf-new-posts {
 	text-align: left;
-	margin-right: 0px;
+	font-style: bold;
+	font-size: 1.2em;
 }
 
 dd.tf-most-active {
 	font-size: 1.2em;
-	line-height: 1.3em;
+	line-height: 1.4em;
 	text-align: left;
-	margin-top: -5px;
 	width: 185px;
 }
 
 dd.tf-newest {
 	font-size: 1.2em;
-	line-height: 1.3em;
+	line-height: 1.4em;
 	text-align: left;
-	margin-top: -5px;
 }
 
 dd.tf-active-header {
