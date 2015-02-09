@@ -6,19 +6,22 @@
 
 dd.tf-most-active {
 	font-size: 1.2em;
-	line-height: 1.4em;
+	line-height: 1.2em;
 	text-align: left;
 	width: 185px;
+	margin-top: -5px;
 }
 
 dd.tf-newest {
 	font-size: 1.2em;
-	line-height: 1.4em;
+	line-height: 1.2em;
 	text-align: left;
+	margin-top: -5px;
 }
 
 dd.tf-active-header {
 	width: 185px;
+	text-align:left;
 }
 
 #top_five ul {
@@ -40,6 +43,10 @@ dd.tf-active-header {
 #top_five .meta {
 	display: block;
 	padding-left: 8px;
+}
+
+#top_five .meta span {
+	font-size: .9em;
 }
 
 .rtl #top_five {
