@@ -28,11 +28,15 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\template\template */
 	protected $template;
 
-	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions, \phpbb\config\config $config, \phpbb\template\template $template)
+	/** @var string PHP extension */
+	protected $php_ext;
+
+	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions, \phpbb\config\config $config, \phpbb\template\template $template, $php_ext)
 	{
 		$this->tf_functions = $functions;
 		$this->config = $config;
 		$this->template = $template;
+		$this->php_ext = $php_ext;
 	}
 
 	static public function getSubscribedEvents()
@@ -62,11 +66,16 @@ class listener implements EventSubscriberInterface
 
 	public function load_language_on_setup($event)
 	{
-		$lang_set_ext = $event['lang_set_ext'];
-		$lang_set_ext[] = array(
-			'ext_name' => 'rmcgirr83/topfive',
-			'lang_set' => 'topfive',
-		);
-		$event['lang_set_ext'] = $lang_set_ext;
+		// only load the language on index page
+		$page_name = str_replace('.' . $this->php_ext, '', $event['user_data']['page_name']);
+		if ($page_name == 'index')
+		{
+			$lang_set_ext = $event['lang_set_ext'];
+			$lang_set_ext[] = array(
+				'ext_name' => 'rmcgirr83/topfive',
+				'lang_set' => 'topfive',
+			);
+			$event['lang_set_ext'] = $lang_set_ext;
+		}
 	}
 }

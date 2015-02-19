@@ -12,11 +12,13 @@ services:
             - @user
             - %core.root_path%
             - %core.php_ext%
+
     rmcgirr83.topfive.listener:
         class: rmcgirr83\topfive\event\listener
         arguments:
             - @rmcgirr83.topfive.functions
             - @config
             - @template
+            - %core.php_ext%
         tags:
             - { name: event.listener }
