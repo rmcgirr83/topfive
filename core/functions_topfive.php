@@ -186,6 +186,12 @@ class functions_topfive
 				}
 				$this->db->sql_freeresult($result);
 			}
+			else
+			{
+				$this->template->assign_block_vars($tpl_loopname, array(
+					'NO_TOPIC_TITLE'	=> $this->user->lang['NO_TOPIC_EXIST'],
+				));
+			}
 		}
 		else
 		{
