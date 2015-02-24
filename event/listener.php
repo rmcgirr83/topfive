@@ -69,7 +69,7 @@ class listener implements EventSubscriberInterface
 		if (empty($this->config['top_five_active']))
 		{
 			return;
-		}	
+		}
 		// only load the language on index page
 		$page_name = str_replace('.' . $this->php_ext, '', $event['user_data']['page_name']);
 		if ($page_name == 'index')
