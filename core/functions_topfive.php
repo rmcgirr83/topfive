@@ -79,7 +79,6 @@ class functions_topfive
 			/**
 			* Select topic_ids
 			*/
-			$topic_ids = array();
 			$sql = 'SELECT forum_id, topic_id, topic_type
 				FROM ' . TOPICS_TABLE . '
 				WHERE ' . $this->db->sql_in_set('forum_id', $forum_ary) . '
@@ -103,20 +102,22 @@ class functions_topfive
 			}
 			$this->db->sql_freeresult($result);
 
-			// this extension might be installed without any topics within the forum.
-			// the query requires $topic_ids
+			// Get topic tracking
+			$topic_ids_ary = $topic_ids;
+			$topic_tracking_info = array();
+			foreach ($forums as $forum_id => $topic_ids)
+			{
+				$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $topic_ids, $ga_topic_ids);
+			}
+			$topic_ids = $topic_ids_ary;
+			unset($topic_ids_ary);
+
+			/*
+			* must have topic_ids.
+			* A user can have forums and not have topic_ids before installing this extension
+			*/
 			if (sizeof($topic_ids))
 			{
-				// Get topic tracking
-				$topic_ids_ary = $topic_ids;
-				$topic_tracking_info = array();
-				foreach ($forums as $forum_id => $topic_ids)
-				{
-					$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $topic_ids, $ga_topic_ids);
-				}
-				$topic_ids = $topic_ids_ary;
-				unset($topic_ids_ary);
-
 				// grab all posts that meet criteria and auths
 				$sql_array = array(
 					'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
@@ -160,13 +161,13 @@ class functions_topfive
 					{
 						$topic_title = (utf8_strlen($topic_title) > 60 + 3) ? utf8_substr($topic_title, 0, 60) . '...' : $topic_title;
 					}
-					$is_guest = $row['user_id'] != ANONYMOUS ? false : true;
+					$is_guest = ($row['user_id'] == ANONYMOUS) ? true : false;
 
 					$tpl_ary = array(
 						'U_TOPIC'			=> $view_topic_url,
 						'U_FORUM'			=> $forum_name_url,
 						'S_UNREAD'			=> ($post_unread) ? true : false,
-						'USERNAME_FULL'		=> $is_guest ? $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+						'USERNAME_FULL'		=> ($is_guest || !$this->auth->acl_get('u_viewprofile')) ? $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 						'LAST_TOPIC_TIME'	=> $this->user->format_date($row['topic_last_post_time']),
 						'TOPIC_TITLE' 		=> $topic_title,
 						'FORUM_NAME'		=> $forum_name,
