@@ -25,7 +25,7 @@ class functions_topfive
 	/** @var \phpbb\content_visibility */
 	protected $content_visibility;
 
-	/** @var \phpbb\db\driver\driver */
+	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
 
 	/** @var \phpbb\event\dispatcher_interface */
