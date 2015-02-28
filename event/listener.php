@@ -28,11 +28,15 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\template\template */
 	protected $template;
 
-	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions, \phpbb\config\config $config, \phpbb\template\template $template)
+	/** @var \phpbb\user */
+	protected $user;
+
+	public function __construct(\rmcgirr83\topfive\core\functions_topfive $functions, \phpbb\config\config $config, \phpbb\template\template $template, \phpbb\user $user)
 	{
 		$this->tf_functions = $functions;
 		$this->config = $config;
 		$this->template = $template;
+		$this->user = $user;
 	}
 
 	static public function getSubscribedEvents()
@@ -49,7 +53,7 @@ class listener implements EventSubscriberInterface
 		{
 			return;
 		}
-		
+
 		// add lang file
 		$this->user->add_lang_ext('rmcgirr83/topfive', 'topfive');
 
