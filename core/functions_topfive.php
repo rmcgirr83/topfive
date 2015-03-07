@@ -233,7 +233,7 @@ class functions_topfive
 			}
 			$sql_other = (empty($sql_and) && empty($sql_where)) ? ' WHERE' : ' AND';
 			$sql_other .=  ' user_posts <> 0';
-			
+
 			// do the main sql query
 			$sql = 'SELECT user_id, username, user_colour, user_posts
 				FROM ' . USERS_TABLE . '
@@ -258,7 +258,7 @@ class functions_topfive
 		}
 
 		foreach ($user_posts as $row)
-		{		
+		{
 			$username_string = ($this->auth->acl_get('u_viewprofile')) ? get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
 
 			$this->template->assign_block_vars('top_five_active',array(
