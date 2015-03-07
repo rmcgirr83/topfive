@@ -5,7 +5,11 @@
 	"homepage": "https://github.com/RMcGirr83/topfive",
 	"version": "1.0.1",
 	"time": "2015-02-07",
-	"keywords": ["phpbb", "extension", "top five"],
+    "keywords": [
+        "phpbb",
+        "extension",
+        "top five"
+    ],
 	"license": "GPL-2.0",
 	"authors": [
 		{

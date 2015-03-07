@@ -81,8 +81,7 @@ class functions_topfive
 			*/
 			$sql = 'SELECT forum_id, topic_id, topic_type
 				FROM ' . TOPICS_TABLE . '
-				WHERE ' . $this->db->sql_in_set('forum_id', $forum_ary) . '
-				AND ' . $this->content_visibility->get_forums_visibility_sql('topic', $forum_ary) . '
+				WHERE ' . $this->content_visibility->get_forums_visibility_sql('topic', $forum_ary) . '
 				AND topic_status <> ' . ITEM_MOVED . '
 				ORDER BY topic_last_post_time DESC';
 
@@ -103,14 +102,11 @@ class functions_topfive
 			$this->db->sql_freeresult($result);
 
 			// Get topic tracking
-			$topic_ids_ary = $topic_ids;
 			$topic_tracking_info = array();
-			foreach ($forums as $forum_id => $topic_ids)
+			foreach ($forums as $forum_id => $topic_id)
 			{
-				$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $topic_ids, $ga_topic_ids);
+				$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $topic_id, $ga_topic_ids);
 			}
-			$topic_ids = $topic_ids_ary;
-			unset($topic_ids_ary);
 
 			/*
 			* must have topic_ids.
@@ -145,8 +141,9 @@ class functions_topfive
 				$vars = array('sql_array');
 				extract($this->dispatcher->trigger_event('rmcgirr83.topfive.sql_pull_topics_data', compact($vars)));
 
-				// cache the query for 5 minutes
-				$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany, 0, 300);
+				// cache the query for one minute
+				$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany, 0, 60);
+
 				while( $row = $this->db->sql_fetchrow($result) )
 				{
 					$topic_id = $row['topic_id'];
@@ -227,7 +224,7 @@ class functions_topfive
 				//grab all mods
 				$mod_ary = $this->auth->acl_get_list(false,'m_', false);
 				$mod_ary = (!empty($mod_ary[0]['m_'])) ? $mod_ary[0]['m_'] : array();
-				$admin_mod_array = array_unique(array_merge($admin_ary,$mod_ary));
+				$admin_mod_array = array_unique(array_merge($admin_ary, $mod_ary));
 				if(sizeof($admin_mod_array))
 				{
 					$sql_and = empty($sql_where) ? ' WHERE ' . $this->db->sql_in_set('user_id', $admin_mod_array, true) : ' AND ' . $this->db->sql_in_set('user_id', $admin_mod_array, true);
