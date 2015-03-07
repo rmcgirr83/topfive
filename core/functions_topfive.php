@@ -144,7 +144,7 @@ class functions_topfive
 				// cache the query for one minute
 				$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany, 0, 60);
 
-				while( $row = $this->db->sql_fetchrow($result) )
+				while ($row = $this->db->sql_fetchrow($result))
 				{
 					$topic_id = $row['topic_id'];
 					$forum_id = $row['forum_id'];
@@ -225,12 +225,15 @@ class functions_topfive
 				$mod_ary = $this->auth->acl_get_list(false,'m_', false);
 				$mod_ary = (!empty($mod_ary[0]['m_'])) ? $mod_ary[0]['m_'] : array();
 				$admin_mod_array = array_unique(array_merge($admin_ary, $mod_ary));
-				if(sizeof($admin_mod_array))
+				if (sizeof($admin_mod_array))
 				{
-					$sql_and = empty($sql_where) ? ' WHERE ' . $this->db->sql_in_set('user_id', $admin_mod_array, true) : ' AND ' . $this->db->sql_in_set('user_id', $admin_mod_array, true);
+					$sql_and = empty($sql_where) ? ' WHERE' : ' AND';
+					$sql_and .= ' ' . $this->db->sql_in_set('user_id', $admin_mod_array, true);
 				}
 			}
-			$sql_other = (empty($sql_and) && empty($sql_where)) ? ' WHERE user_posts <> 0 ' : ' AND user_posts <> 0';
+			$sql_other = (empty($sql_and) && empty($sql_where)) ? ' WHERE' : ' AND';
+			$sql_other .=  ' user_posts <> 0';
+			
 			// do the main sql query
 			$sql = 'SELECT user_id, username, user_colour, user_posts
 				FROM ' . USERS_TABLE . '
