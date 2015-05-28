@@ -14,37 +14,20 @@
 			<dl>
 				<dt>
 					<div class="list-inner">
-						<ul>
-							<!-- BEGIN top_five_topic -->
-								<li>
-									<!-- IF top_five_topic.NO_TOPIC_TITLE-->
-										{top_five_topic.NO_TOPIC_TITLE}
-									<!-- ELSE -->
-										<a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a>&nbsp;{L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME}</span>
-										<!-- EVENT rmcgirr83_top_five_topiclist_row_append -->
-									<!-- ENDIF -->
-								</li>
-							<!-- END top_five_topic -->
-						</ul>
+						<!-- BEGIN top_five_topic -->
+						<!-- IF top_five_topic.NO_TOPIC_TITLE-->{top_five_topic.NO_TOPIC_TITLE}<!-- ELSE --><a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a>&nbsp;{L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME}<!-- EVENT rmcgirr83_top_five_topiclist_row_append --><!-- ENDIF --></span>
+						<!-- END top_five_topic -->
 					</div>
 				</dt>
 				<dd class="topics tf-most-active">
-					<ul>
-						<!-- BEGIN top_five_active -->
-							<li>
-								<span class="meta">{top_five_active.USERNAME_FULL}<span><br />&nbsp;&nbsp;{L_POSTS}{L_COLON} <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a></span></span>
-							</li>
-						<!-- END top_five_active -->
-					</ul>
+					<!-- BEGIN top_five_active -->
+					<span class="meta">{top_five_active.USERNAME_FULL}<span><br />&nbsp;&nbsp;{L_POSTS}{L_COLON} <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a></span></span>
+					<!-- END top_five_active -->
 				</dd>
 				<dd class="lastpost tf-newest">
-					<ul>
-						<!-- BEGIN top_five_newest -->
-							<li>
-								<span class="meta">{top_five_newest.USERNAME_FULL}<span><br />&nbsp;&nbsp;{L_JOINED}{L_COLON} {top_five_newest.REG_DATE}</span></span>
-							</li>
-						<!-- END top_five_newest -->
-					</ul>
+					<!-- BEGIN top_five_newest -->
+					<span class="meta">{top_five_newest.USERNAME_FULL}<span><br />&nbsp;&nbsp;{L_JOINED}{L_COLON} {top_five_newest.REG_DATE}</span></span>
+					<!-- END top_five_newest -->
 				</dd>
 			</dl>
 		</li>

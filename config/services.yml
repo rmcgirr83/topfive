@@ -1,6 +1,6 @@
 services:
     rmcgirr83.topfive.functions:
-        class: rmcgirr83\topfive\core\functions_topfive
+        class: rmcgirr83\topfive\core\topfive
         arguments:
             - @auth
             - @config

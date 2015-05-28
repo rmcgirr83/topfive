@@ -12,10 +12,6 @@ dd.tf-most-active {
 	margin-top: -5px;
 }
 
-.rtl dd.tf-most-active  {
-	text-align: right;
-}
-
 dd.tf-newest {
 	font-size: 1.2em;
 	line-height: 1.2em;
@@ -23,17 +19,9 @@ dd.tf-newest {
 	margin-top: -5px;
 }
 
-.rtl dd.tf-newest {
-	text-align: right;
-}
-
 dd.tf-active-header {
 	width: 185px;
 	text-align:left;
-}
-
-.rtl dd.tf-active-header {
-	text-align:right;
 }
 
 #top_five ul {
