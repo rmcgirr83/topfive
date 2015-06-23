@@ -154,10 +154,8 @@ class topfive
 					$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
 					$forum_name_url = append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
 					$topic_title = censor_text($row['topic_title']);
-					if (utf8_strlen($topic_title) >= 60)
-					{
-						$topic_title = (utf8_strlen($topic_title) > 60 + 3) ? utf8_substr($topic_title, 0, 60) . '...' : $topic_title;
-					}
+					$topic_title = truncate_string($topic_title, 60, 255, false, $this->user->lang['ELLIPSIS']);
+
 					$is_guest = ($row['user_id'] == ANONYMOUS) ? true : false;
 
 					$tpl_ary = array(

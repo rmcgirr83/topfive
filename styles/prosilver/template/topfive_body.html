@@ -1,4 +1,4 @@
-<div class="forabg" id="top_five">
+<div class="forabg responsive-hide" id="top_five">
 	<div class="inner">
 	<ul class="topiclist">
 		<li class="header">
@@ -20,7 +20,7 @@
 									<!-- IF top_five_topic.NO_TOPIC_TITLE-->
 										{top_five_topic.NO_TOPIC_TITLE}
 									<!-- ELSE -->
-										<a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME} &raquo; {L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a></span>
+										<a href="{top_five_topic.U_TOPIC}" class="forumtitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">{top_five_topic.TOPIC_TITLE}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME} &raquo; {L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a></span>
 										<!-- EVENT rmcgirr83_top_five_topiclist_row_append -->
 									<!-- ENDIF -->
 								</li>
@@ -37,7 +37,7 @@
 						<!-- END top_five_active -->
 					</ul>
 				</dd>
-				<dd class="lastpost tf-newest">
+				<dd class="lastpost tf-newest"><span>
 					<ul>
 						<!-- BEGIN top_five_newest -->
 							<li>
@@ -45,7 +45,7 @@
 							</li>
 						<!-- END top_five_newest -->
 					</ul>
-				</dd>
+				</span></dd>
 			</dl>
 		</li>
 	</ul>
