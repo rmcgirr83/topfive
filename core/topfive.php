@@ -74,18 +74,34 @@ class topfive
 		}
 		$forum_ary = array_unique($forum_ary);
 
-		if (sizeof($forum_ary))
+		// want to exclude some forums
+		$excluded_forums = explode(', ', $this->config['top_five_excluded']);
+
+		// now remove those topics from the display per the excluded forums array
+		$forum_ary = array_diff($forum_ary, $excluded_forums);
+
+		if (!sizeof($forum_ary))
 		{
+			$this->template->assign_block_vars($tpl_loopname, array(
+				'NO_TOPIC_TITLE'	=> $this->user->lang['NO_TOPIC_EXIST'],
+			));
+
+			return;
+		}
+
 			/**
 			* Select topic_ids
 			*/
-			$sql = 'SELECT forum_id, topic_id, topic_type
-				FROM ' . TOPICS_TABLE . '
-				WHERE ' . $this->content_visibility->get_forums_visibility_sql('topic', $forum_ary) . '
-				AND topic_status <> ' . ITEM_MOVED . '
-				ORDER BY topic_last_post_time DESC';
+		// grab all posts that meet criteria and auths
+		$sql_array = array(
+			'SELECT'	=> 't.forum_id, t.topic_id, t.topic_type',
+			'FROM'		=> array(TOPICS_TABLE => 't'),
+			'WHERE'		=> $this->content_visibility->get_forums_visibility_sql('topic', $forum_ary),
+			'ORDER_BY'	=> 't.topic_last_post_time DESC',
+		);
 
-			$result = $this->db->sql_query_limit($sql, $howmany);
+		$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
+
 			$forums = $ga_topic_ids = $topic_ids = array();
 			while ($row = $this->db->sql_fetchrow($result))
 			{
@@ -112,8 +128,15 @@ class topfive
 			* must have topic_ids.
 			* A user can have forums and not have topic_ids before installing this extension
 			*/
-			if (sizeof($topic_ids))
+		if (!sizeof($topic_ids))
 			{
+			$this->template->assign_block_vars($tpl_loopname, array(
+				'NO_TOPIC_TITLE'	=> $this->user->lang['NO_TOPIC_EXIST'],
+			));
+
+			return;
+		}
+
 				// grab all posts that meet criteria and auths
 				$sql_array = array(
 					'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
@@ -141,8 +164,7 @@ class topfive
 				$vars = array('sql_array');
 				extract($this->dispatcher->trigger_event('rmcgirr83.topfive.sql_pull_topics_data', compact($vars)));
 
-				// cache the query for one minute
-				$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany, 0, 60);
+		$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
@@ -181,20 +203,6 @@ class topfive
 					$this->template->assign_block_vars($tpl_loopname, $tpl_ary);
 				}
 				$this->db->sql_freeresult($result);
-			}
-			else
-			{
-				$this->template->assign_block_vars($tpl_loopname, array(
-					'NO_TOPIC_TITLE'	=> $this->user->lang['NO_TOPIC_EXIST'],
-				));
-			}
-		}
-		else
-		{
-			$this->template->assign_block_vars($tpl_loopname, array(
-				'NO_TOPIC_TITLE'	=> $this->user->lang['NO_TOPIC_EXIST'],
-			));
-		}
 	}
 
 	public function topposters()

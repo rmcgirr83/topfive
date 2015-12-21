@@ -27,6 +27,10 @@
 			<dd><input type="text" name="top_five_how_many" id="top_five_how_many" size="10" value="{HOWMANY}" /></dd>
 		</dl>
 		<dl>
+			<dt><label for="top_five_excluded">{L_TF_EXCLUDED}{L_COLON}</label><br /><span>{L_TF_EXCLUDED_EXPLAIN}</span></dt>
+			<dd><input type="text" id="top_five_excluded" name="top_five_excluded" size="30" value="{TF_EXCLUDED}" /></dd>
+		</dl>		
+		<dl>
 			<dt><label id="top_five_ignore_inactive_users" for="top_five_ignore_inactive_users">{L_TF_IGNORE_USERS}</label><br />{L_TF_IGNORE_USERS_EXPLAIN}</dt>
 			<dd><input type="radio" class="radio" name="top_five_ignore_inactive_users" value="1" <!-- IF IGNORE_INACTIVE -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
 				<input type="radio" class="radio" name="top_five_ignore_inactive_users" value="0" <!-- IF not IGNORE_INACTIVE -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>

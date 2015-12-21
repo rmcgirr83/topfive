@@ -18,9 +18,6 @@ class topfive_module
 		global $db, $user, $auth, $template, $cache, $request;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
 
-		$this->config = $config;
-		$this->request = $request;
-
 		$user->add_lang('acp/common');
 		$user->add_lang_ext('rmcgirr83/topfive', 'acp/info_acp_topfive');
 		$this->tpl_name = 'acp_topfive';
@@ -53,6 +50,8 @@ class topfive_module
 				$config->set('top_five_show_admins_mods', $request->variable('top_five_show_admins_mods', true));
 				$config->set('top_five_location', $request->variable('top_five_location', true));
 				$config->set('top_five_active', $request->variable('top_five_active', true));
+				// variable should be '' as it is a string ("1, 2, 3928") here, not an integer.
+				$config->set('top_five_excluded', $request->variable('top_five_excluded', '0'));
 
 				$cache->destroy('_top_five_newest_users');
 				$cache->destroy('_top_five_posters');
@@ -63,13 +62,14 @@ class topfive_module
 
 		$template->assign_vars(array(
 			'TF_ERROR'			=> isset($error) ? ((sizeof($error)) ? implode('<br />', $error) : '') : '',
-			'HOWMANY'			=> (!empty($this->config['top_five_how_many'])) ? $this->config['top_five_how_many'] : 0,
-			'IGNORE_INACTIVE'	=> (!empty($this->config['top_five_ignore_inactive_users'])) ? true : false,
-			'IGNORE_FOUNDER'	=> (!empty($this->config['top_five_ignore_founder'])) ? true : false,
-			'SHOW_ADMINS_MODS'	=> (!empty($this->config['top_five_show_admins_mods'])) ? true : false,
-			'LOCATION'			=> (!empty($this->config['top_five_location'])) ? true : false,
-			'ACTIVE'			=> (!empty($this->config['top_five_active'])) ? true : false,
-			'TF_VERSION'		=> $this->config['top_five_version'],
+			'HOWMANY'			=> isset($config['top_five_how_many']) ? $config['top_five_how_many'] : 0,
+			'IGNORE_INACTIVE'	=> isset($config['top_five_ignore_inactive_users']) ? $config['top_five_ignore_inactive_users'] : false,
+			'IGNORE_FOUNDER'	=> isset($config['top_five_ignore_founder']) ? $config['top_five_ignore_founder'] : false,
+			'SHOW_ADMINS_MODS'	=> isset($config['top_five_show_admins_mods']) ? $config['top_five_show_admins_mods'] : false,
+			'LOCATION'			=> isset($config['top_five_location']) ? $config['top_five_location'] : false,
+			'ACTIVE'			=> isset($config['top_five_active']) ? $config['top_five_active'] : false,
+			'TF_VERSION'		=> $config['top_five_version'],
+			'TF_EXCLUDED'		=> isset($config['top_five_excluded']) ? $config['top_five_excluded'] : '',
 
 			'U_ACTION'			=> $this->u_action,
 		));
