@@ -89,9 +89,9 @@ class topfive
 			return;
 		}
 
-			/**
-			* Select topic_ids
-			*/
+		/**
+		* Select topic_ids
+		*/
 		// grab all posts that meet criteria and auths
 		$sql_array = array(
 			'SELECT'	=> 't.forum_id, t.topic_id, t.topic_type',
