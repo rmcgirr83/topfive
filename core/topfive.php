@@ -102,34 +102,34 @@ class topfive
 
 		$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
 
-			$forums = $ga_topic_ids = $topic_ids = array();
-			while ($row = $this->db->sql_fetchrow($result))
+		$forums = $ga_topic_ids = $topic_ids = array();
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$topic_ids[] = $row['topic_id'];
+			if ($row['topic_type'] == POST_GLOBAL)
 			{
-				$topic_ids[] = $row['topic_id'];
-				if ($row['topic_type'] == POST_GLOBAL)
-				{
-					$ga_topic_ids[] = $row['topic_id'];
-				}
-				else
-				{
-					$forums[$row['forum_id']][] = $row['topic_id'];
-				}
+				$ga_topic_ids[] = $row['topic_id'];
 			}
-			$this->db->sql_freeresult($result);
-
-			// Get topic tracking
-			$topic_tracking_info = array();
-			foreach ($forums as $forum_id => $topic_id)
+			else
 			{
-				$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $topic_id, $ga_topic_ids);
+				$forums[$row['forum_id']][] = $row['topic_id'];
 			}
+		}
+		$this->db->sql_freeresult($result);
 
-			/*
-			* must have topic_ids.
-			* A user can have forums and not have topic_ids before installing this extension
-			*/
+		// Get topic tracking
+		$topic_tracking_info = array();
+		foreach ($forums as $forum_id => $topic_id)
+		{
+			$topic_tracking_info[$forum_id] = get_complete_topic_tracking($forum_id, $topic_id, $ga_topic_ids);
+		}
+
+		/*
+		* must have topic_ids.
+		* A user can have forums and not have topic_ids before installing this extension
+		*/
 		if (!sizeof($topic_ids))
-			{
+		{
 			$this->template->assign_block_vars($tpl_loopname, array(
 				'NO_TOPIC_TITLE'	=> $this->user->lang['NO_TOPIC_EXIST'],
 			));
@@ -137,72 +137,72 @@ class topfive
 			return;
 		}
 
-				// grab all posts that meet criteria and auths
-				$sql_array = array(
-					'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
-					'FROM'		=> array(TOPICS_TABLE => 't'),
-					'LEFT_JOIN'	=> array(
-						array(
-							'FROM'	=> array(USERS_TABLE => 'u'),
-							'ON'	=> 't.topic_last_poster_id = u.user_id',
-						),
-						array(
-							'FROM'	=> array(FORUMS_TABLE => 'f'),
-							'ON'	=> 't.forum_id = f.forum_id',
-						),
-					),
-					'WHERE'		=> $this->db->sql_in_set('t.topic_id', $topic_ids),
-					'ORDER_BY'	=> 't.topic_last_post_time DESC',
-				);
-				/**
-				* Event to modify the SQL query before the topics data is retrieved
-				*
-				* @event rmcgirr83.topfive.sql_pull_topics_data
-				* @var	array	sql_array		The SQL array
-				* @since 1.0.0
-				*/
-				$vars = array('sql_array');
-				extract($this->dispatcher->trigger_event('rmcgirr83.topfive.sql_pull_topics_data', compact($vars)));
+		// grab all posts that meet criteria and auths
+		$sql_array = array(
+			'SELECT'	=> 'u.user_id, u.username, u.user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
+			'FROM'		=> array(TOPICS_TABLE => 't'),
+			'LEFT_JOIN'	=> array(
+				array(
+					'FROM'	=> array(USERS_TABLE => 'u'),
+					'ON'	=> 't.topic_last_poster_id = u.user_id',
+				),
+				array(
+					'FROM'	=> array(FORUMS_TABLE => 'f'),
+					'ON'	=> 't.forum_id = f.forum_id',
+				),
+			),
+			'WHERE'		=> $this->db->sql_in_set('t.topic_id', $topic_ids),
+			'ORDER_BY'	=> 't.topic_last_post_time DESC',
+		);
+		/**
+		* Event to modify the SQL query before the topics data is retrieved
+		*
+		* @event rmcgirr83.topfive.sql_pull_topics_data
+		* @var	array	sql_array		The SQL array
+		* @since 1.0.0
+		*/
+		$vars = array('sql_array');
+		extract($this->dispatcher->trigger_event('rmcgirr83.topfive.sql_pull_topics_data', compact($vars)));
 
 		$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
 
-				while ($row = $this->db->sql_fetchrow($result))
-				{
-					$topic_id = $row['topic_id'];
-					$forum_id = $row['forum_id'];
-					$forum_name = $row['forum_name'];
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$topic_id = $row['topic_id'];
+			$forum_id = $row['forum_id'];
+			$forum_name = $row['forum_name'];
 
-					$post_unread = (isset($topic_tracking_info[$forum_id][$topic_id]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$topic_id]) ? true : false;
-					$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
-					$forum_name_url = append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
-					$topic_title = censor_text($row['topic_title']);
-					$topic_title = truncate_string($topic_title, 60, 255, false, $this->user->lang['ELLIPSIS']);
+			$post_unread = (isset($topic_tracking_info[$forum_id][$topic_id]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$topic_id]) ? true : false;
+			$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
+			$forum_name_url = append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
+			$topic_title = censor_text($row['topic_title']);
+			$topic_title = truncate_string($topic_title, 60, 255, false, $this->user->lang['ELLIPSIS']);
 
-					$is_guest = ($row['user_id'] == ANONYMOUS) ? true : false;
+			$is_guest = ($row['user_id'] == ANONYMOUS) ? true : false;
 
-					$tpl_ary = array(
-						'U_TOPIC'			=> $view_topic_url,
-						'U_FORUM'			=> $forum_name_url,
-						'S_UNREAD'			=> ($post_unread) ? true : false,
-						'USERNAME_FULL'		=> ($is_guest || !$this->auth->acl_get('u_viewprofile')) ? $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-						'LAST_TOPIC_TIME'	=> $this->user->format_date($row['topic_last_post_time']),
-						'TOPIC_TITLE' 		=> $topic_title,
-						'FORUM_NAME'		=> $forum_name,
-					);
-					/**
-					* Modify the topic data before it is assigned to the template
-					*
-					* @event rmcgirr83.topfive.modify_tpl_ary
-					* @var	array	row			Array with topic data
-					* @var	array	tpl_ary		Template block array with topic data
-					* @since 1.0.0
-					*/
-					$vars = array('row', 'tpl_ary');
-					extract($this->dispatcher->trigger_event('rmcgirr83.topfive.modify_tpl_ary', compact($vars)));
+			$tpl_ary = array(
+				'U_TOPIC'			=> $view_topic_url,
+				'U_FORUM'			=> $forum_name_url,
+				'S_UNREAD'			=> ($post_unread) ? true : false,
+				'USERNAME_FULL'		=> ($is_guest || !$this->auth->acl_get('u_viewprofile')) ? $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'LAST_TOPIC_TIME'	=> $this->user->format_date($row['topic_last_post_time']),
+				'TOPIC_TITLE' 		=> $topic_title,
+				'FORUM_NAME'		=> $forum_name,
+			);
+			/**
+			* Modify the topic data before it is assigned to the template
+			*
+			* @event rmcgirr83.topfive.modify_tpl_ary
+			* @var	array	row			Array with topic data
+			* @var	array	tpl_ary		Template block array with topic data
+			* @since 1.0.0
+			*/
+			$vars = array('row', 'tpl_ary');
+			extract($this->dispatcher->trigger_event('rmcgirr83.topfive.modify_tpl_ary', compact($vars)));
 
-					$this->template->assign_block_vars($tpl_loopname, $tpl_ary);
-				}
-				$this->db->sql_freeresult($result);
+			$this->template->assign_block_vars($tpl_loopname, $tpl_ary);
+		}
+		$this->db->sql_freeresult($result);
 	}
 
 	public function topposters()
