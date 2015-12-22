@@ -96,7 +96,7 @@ class topfive
 		$sql_array = array(
 			'SELECT'	=> 't.forum_id, t.topic_id, t.topic_type',
 			'FROM'		=> array(TOPICS_TABLE => 't'),
-			'WHERE'		=> $this->content_visibility->get_forums_visibility_sql('topic', $forum_ary),
+			'WHERE'		=> $this->content_visibility->get_forums_visibility_sql('topic', $forum_ary) . ' AND topic_status <> ' . ITEM_MOVED,
 			'ORDER_BY'	=> 't.topic_last_post_time DESC',
 		);
 
