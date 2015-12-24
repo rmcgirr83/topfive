@@ -75,7 +75,7 @@ class topfive
 		$forum_ary = array_unique($forum_ary);
 
 		// want to exclude some forums
-		$excluded_forums = explode(', ', $this->config['top_five_excluded']);
+		$excluded_forums = explode(',', $this->config['top_five_excluded']);
 
 		// now remove those topics from the display per the excluded forums array
 		$forum_ary = array_diff($forum_ary, $excluded_forums);

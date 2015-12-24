@@ -31,7 +31,7 @@ $lang = array_merge($lang, array(
 	'TF_SAVED'		=> 'Changes Saved',
 	'TF_HOWMANY'	=> 'How Many',
 	'TF_EXCLUDED'	=> 'Excluded forums',
-	'TF_EXCLUDED_EXPLAIN'	=> 'The IDs of forums to exclude, seperated by ", " (Example: 7, 9)<br />If you don&#39;t want to exclude a forum, just enter 0.',
+	'TF_EXCLUDED_EXPLAIN'	=> 'The IDs of forums to exclude, seperated by a comma (Example: 7,9)<br>If you don&#39;t want to exclude a forum, just enter 0.',
 
 	'TF_HOWMANY_EXPLAIN'	=> 'How many would you like to display...minimum required is 5, maximum is 100',
 	'TF_IGNORE_USERS'		=> 'Ignore Inactive Users',
