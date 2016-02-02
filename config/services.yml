@@ -20,5 +20,7 @@ services:
             - @config
             - @template
             - @user
+            - @controller.helper
+            - @?phpbb.collapsiblecategories.operator
         tags:
             - { name: event.listener }
