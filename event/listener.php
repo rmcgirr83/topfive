@@ -35,12 +35,12 @@ class listener implements EventSubscriberInterface
 	protected $helper;
 
 	public function __construct(
-			\rmcgirr83\topfive\core\topfive $functions,
-			\phpbb\config\config $config,
-			\phpbb\template\template $template,
-			\phpbb\user $user,
-			\phpbb\controller\helper $helper,
-			\phpbb\collapsiblecategories\operator\operator $operator = null)
+		\rmcgirr83\topfive\core\topfive $functions,
+		\phpbb\config\config $config,
+		\phpbb\template\template $template,
+		\phpbb\user $user,
+		\phpbb\controller\helper $helper,
+		\phpbb\collapsiblecategories\operator\operator $operator = null)
 	{
 		$this->functions = $functions;
 		$this->config = $config;
