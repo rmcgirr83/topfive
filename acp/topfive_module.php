@@ -19,7 +19,7 @@ class topfive_module
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
 
 		$user->add_lang('acp/common');
-		$user->add_lang_ext('rmcgirr83/topfive', 'acp/info_acp_topfive');
+		$user->add_lang_ext('rmcgirr83/topfive', 'acp_topfive');
 		$this->tpl_name = 'acp_topfive';
 		$this->page_title = $user->lang['TOPFIVE_MOD'];
 		add_form_key('acp_topfive');
@@ -68,7 +68,6 @@ class topfive_module
 			'SHOW_ADMINS_MODS'	=> isset($config['top_five_show_admins_mods']) ? $config['top_five_show_admins_mods'] : false,
 			'LOCATION'			=> isset($config['top_five_location']) ? $config['top_five_location'] : false,
 			'ACTIVE'			=> isset($config['top_five_active']) ? $config['top_five_active'] : false,
-			'TF_VERSION'		=> $config['top_five_version'],
 			'TF_EXCLUDED'		=> isset($config['top_five_excluded']) ? $config['top_five_excluded'] : '',
 
 			'U_ACTION'			=> $this->u_action,

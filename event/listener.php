@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 	/* @var \rmcgirr83\topfive\core\topfive */
-	protected $functions;
+	protected $topfive;
 
 	/** @var \phpbb\config\config */
 	protected $config;
@@ -35,14 +35,14 @@ class listener implements EventSubscriberInterface
 	protected $helper;
 
 	public function __construct(
-		\rmcgirr83\topfive\core\topfive $functions,
+		\rmcgirr83\topfive\core\topfive $topfive,
 		\phpbb\config\config $config,
 		\phpbb\template\template $template,
 		\phpbb\user $user,
 		\phpbb\controller\helper $helper,
 		\phpbb\collapsiblecategories\operator\operator $operator = null)
 	{
-		$this->functions = $functions;
+		$this->topfive = $topfive;
 		$this->config = $config;
 		$this->template = $template;
 		$this->user = $user;
@@ -68,9 +68,9 @@ class listener implements EventSubscriberInterface
 		// add lang file
 		$this->user->add_lang_ext('rmcgirr83/topfive', 'topfive');
 
-		$this->functions->topposters();
-		$this->functions->newusers();
-		$this->functions->toptopics();
+		$this->topfive->topposters();
+		$this->topfive->newusers();
+		$this->topfive->toptopics();
 		if ($this->operator !== null)
 		{
 			$fid = 'topfive'; // can be any unique string to identify your extension's collapsible element
