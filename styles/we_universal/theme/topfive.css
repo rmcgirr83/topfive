@@ -1,0 +1,87 @@
+.tf-new-posts {
+	text-align: left;
+	font-style: bold;
+	font-size: 1.2em;
+}
+
+dd.tf-most-active {
+	font-size: 1.2em;
+	line-height: 1.2em;
+	text-align: left;
+	width: 185px;
+	margin-top: -5px;
+}
+
+.rtl dd.tf-most-active  {
+	text-align: right;
+}
+
+dd.tf-newest {
+	font-size: 1.2em;
+	line-height: 1.2em;
+	text-align: left;
+	margin-top: -5px;
+}
+
+.rtl dd.tf-newest {
+	text-align: right;
+}
+
+dd.tf-active-header {
+	width: 185px;
+	text-align:left;
+}
+
+.rtl dd.tf-active-header {
+	text-align:right;
+}
+
+#top_five ul {
+	list-style-type: none;
+}
+
+#top_five li {
+	padding: 2px 0;
+}
+
+#top_five li:first-child {
+	padding-top: 0;
+}
+
+#top_five li:last-child {
+	padding-bottom: 0;
+}
+
+#top_five .meta {
+	display: block;
+	padding-left: 8px;
+}
+
+#top_five .meta span {
+	font-size: .9em;
+}
+
+.rtl #top_five {
+	text-align: right;
+}
+
+.rtl #top_five .meta {
+	padding-left: 0;
+	padding-right: 8px;
+}
+
+#top_five ul.topiclist li.row a.subforum {
+	white-space: normal;
+}
+
+#top_five ul.topiclist.topics li.row dt {
+    text-align: inherit !important;
+    width: inherit !important;
+}
+
+@media only screen and (max-width: 700px), only screen and (max-device-width: 700px) {
+	#top_five ul.topiclist li.row a.subforum {
+		white-space: pre;
+		overflow: hidden;
+	}
+}
