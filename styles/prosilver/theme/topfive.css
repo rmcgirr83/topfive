@@ -1,15 +1,8 @@
-.tf-new-posts {
-	text-align: left;
-	font-style: bold;
-	font-size: 1.2em;
-}
-
 dd.tf-most-active {
 	font-size: 1.2em;
 	line-height: 1.2em;
 	text-align: left;
 	width: 185px;
-	margin-top: -5px;
 }
 
 .rtl dd.tf-most-active  {
@@ -17,10 +10,9 @@ dd.tf-most-active {
 }
 
 dd.tf-newest {
-	font-size: 1.2em;
+	font-size: 1.2em;	
 	line-height: 1.2em;
 	text-align: left;
-	margin-top: -5px;
 }
 
 .rtl dd.tf-newest {
@@ -57,10 +49,6 @@ dd.tf-active-header {
 	padding-left: 8px;
 }
 
-#top_five .meta span {
-	font-size: .9em;
-}
-
 .rtl #top_five {
 	text-align: right;
 }
@@ -76,7 +64,13 @@ dd.tf-active-header {
 
 @media only screen and (max-width: 700px), only screen and (max-device-width: 700px) {
 	#top_five ul.topiclist li.row a.subforum {
-		white-space: pre;
 		overflow: hidden;
 	}
 }
+
+/* Fixes avatar aspect-ratio */
+#top_five .topfive-avatar img { 
+	max-height: 20px;
+    vertical-align: middle;
+    width: auto;
+ }

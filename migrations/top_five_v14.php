@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package National Flags
+* @package Top Five
 * @copyright (c) 2015 Rich Mcgirr (RMcGirr83)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *

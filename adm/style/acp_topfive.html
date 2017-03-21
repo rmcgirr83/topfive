@@ -12,35 +12,35 @@
 	<fieldset>
 		<legend>{L_TF_CONFIG}</legend>
 		<dl>
-			<dt><label id="top_five_active" for="top_five_active">{L_TF_ACTIVE}</label></dt>
+			<dt><label>{L_TF_ACTIVE}</label></dt>
 			<dd><input type="radio" class="radio" name="top_five_active" value="1" <!-- IF ACTIVE -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
 				<input type="radio" class="radio" name="top_five_active" value="0" <!-- IF not ACTIVE -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
 		</dl>
 		<dl>
-			<dt><label id="top_five_location" for="top_five_location">{L_TF_LOCATION}</label><br />{L_TF_LOCATION_EXPLAIN}</dt>
+			<dt><label>{L_TF_LOCATION}</label><br />{L_TF_LOCATION_EXPLAIN}</dt>
 			<dd><input type="radio" class="radio" name="top_five_location" value="1" <!-- IF LOCATION -->checked="checked"<!-- ENDIF -->/> {L_TOP_OF_FORUM} &nbsp;
 				<input type="radio" class="radio" name="top_five_location" value="0" <!-- IF not LOCATION -->checked="checked"<!-- ENDIF --> /> {L_BOTTOM_OF_FORUM}</dd>
 		</dl>
 		<dl>
-			<dt><label id="top_five_how_many" for="top_five_how_many">{L_TF_HOWMANY}</label><br />{L_TF_HOWMANY_EXPLAIN}</dt>
-			<dd><input type="text" name="top_five_how_many" id="top_five_how_many" size="10" value="{HOWMANY}" /></dd>
+			<dt><label>{L_TF_HOWMANY}</label><br />{L_TF_HOWMANY_EXPLAIN}</dt>
+			<dd><input type="text" name="top_five_how_many" size="10" value="{HOWMANY}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="top_five_excluded">{L_TF_EXCLUDED}{L_COLON}</label><br /><span>{L_TF_EXCLUDED_EXPLAIN}</span></dt>
-			<dd><input type="text" id="top_five_excluded" name="top_five_excluded" size="30" value="{TF_EXCLUDED}" /></dd>
+			<dt><label>{L_TF_EXCLUDED}{L_COLON}</label><br /><span>{L_TF_EXCLUDED_EXPLAIN}</span></dt>
+			<dd>{TF_EXCLUDED}</dd>
 		</dl>		
 		<dl>
-			<dt><label id="top_five_ignore_inactive_users" for="top_five_ignore_inactive_users">{L_TF_IGNORE_USERS}</label><br />{L_TF_IGNORE_USERS_EXPLAIN}</dt>
+			<dt><label>{L_TF_IGNORE_USERS}</label><br />{L_TF_IGNORE_USERS_EXPLAIN}</dt>
 			<dd><input type="radio" class="radio" name="top_five_ignore_inactive_users" value="1" <!-- IF IGNORE_INACTIVE -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
 				<input type="radio" class="radio" name="top_five_ignore_inactive_users" value="0" <!-- IF not IGNORE_INACTIVE -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
 		</dl>
 		<dl>
-			<dt><label id="top_five_ignore_founder" for="top_five_ignore_founder">{L_TF_IGNORE_FOUNDER}</label><br />{L_TF_IGNORE_FOUNDER_EXPLAIN}</dt>
+			<dt><label>{L_TF_IGNORE_FOUNDER}</label><br />{L_TF_IGNORE_FOUNDER_EXPLAIN}</dt>
 			<dd><input type="radio" class="radio" name="top_five_ignore_founder" value="1" <!-- IF IGNORE_FOUNDER -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
 				<input type="radio" class="radio" name="top_five_ignore_founder" value="0" <!-- IF not IGNORE_FOUNDER -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
 		</dl>
 		<dl>
-			<dt><label id="top_five_show_admins_mods" for="top_five_show_admins_mods">{L_TF_SHOW_ADMINS_MODS}</label><br />{L_TF_SHOW_ADMINS_MODS_EXPLAIN}</dt>
+			<dt><label>{L_TF_SHOW_ADMINS_MODS}</label><br />{L_TF_SHOW_ADMINS_MODS_EXPLAIN}</dt>
 			<dd><input type="radio" class="radio" name="top_five_show_admins_mods" value="1" <!-- IF SHOW_ADMINS_MODS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
 				<input type="radio" class="radio" name="top_five_show_admins_mods" value="0" <!-- IF not SHOW_ADMINS_MODS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
 		</dl>

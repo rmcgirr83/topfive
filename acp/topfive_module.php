@@ -24,6 +24,9 @@ class topfive_module
 		$this->page_title = $user->lang['TOPFIVE_MOD'];
 		add_form_key('acp_topfive');
 
+		// get the excluded forums
+		$excluded_forums = explode(',', $config['top_five_excluded']);
+
 		if ($request->is_set_post('submit'))
 		{
 			if (!check_form_key('acp_topfive'))
@@ -44,14 +47,8 @@ class topfive_module
 
 			if (!sizeof($error))
 			{
-				$config->set('top_five_how_many', $request->variable('top_five_how_many', 0));
-				$config->set('top_five_ignore_inactive_users', $request->variable('top_five_ignore_inactive_users', true));
-				$config->set('top_five_ignore_founder', $request->variable('top_five_ignore_founder', true));
-				$config->set('top_five_show_admins_mods', $request->variable('top_five_show_admins_mods', true));
-				$config->set('top_five_location', $request->variable('top_five_location', true));
-				$config->set('top_five_active', $request->variable('top_five_active', true));
-				// variable should be '' as it is a string ("1, 2, 3928") here, not an integer.
-				$config->set('top_five_excluded', $request->variable('top_five_excluded', '0'));
+
+				$this->set_options();
 
 				$cache->destroy('_top_five_newest_users');
 				$cache->destroy('_top_five_posters');
@@ -68,9 +65,45 @@ class topfive_module
 			'SHOW_ADMINS_MODS'	=> isset($config['top_five_show_admins_mods']) ? $config['top_five_show_admins_mods'] : false,
 			'LOCATION'			=> isset($config['top_five_location']) ? $config['top_five_location'] : false,
 			'ACTIVE'			=> isset($config['top_five_active']) ? $config['top_five_active'] : false,
-			'TF_EXCLUDED'		=> isset($config['top_five_excluded']) ? $config['top_five_excluded'] : '',
+			'TF_EXCLUDED'		=> $this->forum_select($excluded_forums),
 
 			'U_ACTION'			=> $this->u_action,
 		));
+	}
+
+	/**
+	 * Set the options a user can configure
+	 *
+	 * @return null
+	 * @access protected
+	 */
+	protected function set_options()
+	{
+		global $config, $request;
+
+		$config->set('top_five_how_many', $request->variable('top_five_how_many', 0));
+		$config->set('top_five_ignore_inactive_users', $request->variable('top_five_ignore_inactive_users', true));
+		$config->set('top_five_ignore_founder', $request->variable('top_five_ignore_founder', true));
+		$config->set('top_five_show_admins_mods', $request->variable('top_five_show_admins_mods', true));
+		$config->set('top_five_location', $request->variable('top_five_location', true));
+		$config->set('top_five_active', $request->variable('top_five_active', true));
+		// variable should be '' as it is a string ("1, 2, 3928") here, not an integer.
+		$forums = $request->variable('selectForms',  array(''));
+		// change the array to a string
+		$forums  = implode(',', $forums);
+
+		$config->set('top_five_excluded', $forums);
+	}
+
+	/**
+	 * Display a drop down of all forums for selection
+	 *
+	 * @return drop down select
+	 * @access protected
+	 */
+	private function forum_select($value)
+	{
+
+		return '<select id="top_five_excluded" name="selectForms[]" multiple="multiple">' . make_forum_select($value, false, true, true) . '</select>';
 	}
 }
