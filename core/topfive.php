@@ -320,7 +320,7 @@ class topfive
 
 		foreach ($newest_users as $row)
 		{
-			$username_string = ($this->auth->acl_get('u_viewprofile')) ? '<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : '<span class="header-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
+			$username_string = ($this->auth->acl_get('u_viewprofile')) ? '<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : '<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
 
 			$this->template->assign_block_vars('top_five_newest',array(
 				'REG_DATE'			=> $this->user->format_date($row['user_regdate']),
