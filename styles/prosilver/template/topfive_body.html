@@ -3,7 +3,7 @@
 	<div class="inner">
 	<ul class="topiclist">
 		<li class="header">
-			<dl class="<!-- IF S_PHPBB_IS_32 -->row-item<!-- ELSE -->icon<!-- ENDIF -->">
+			<dl <!-- IF S_PHPBB_IS_32 -->class="row-item"<!-- ENDIF -->>
 				<dt><div class="list-inner">{L_NEWEST_TOPICS}</div></dt>
 				<dd class="topics tf-active-header">{L_TOP_FIVE_ACTIVE}</dd>
 				<dd class="lastpost"><span>{L_TOP_FIVE_NEWEST}</span></dd>
@@ -23,7 +23,8 @@
 										{top_five_topic.NO_TOPIC_TITLE}
 									<!-- ELSE -->
 										<a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">
-											<i class="icon fa-file-o fa-fw <!-- IF top_five_topic.S_UNREAD --> icon-red<!-- ELSE --> icon-blue<!-- ENDIF --> icon-md" aria-hidden="true"></i>{top_five_topic.TOPIC_TITLE}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME} &raquo; {L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a></span>
+											<!-- IF S_PHPBB_IS_32 --><i class="icon fa-file-o fa-fw <!-- IF top_five_topic.S_UNREAD --> icon-red<!-- ELSE --> icon-blue<!-- ENDIF --> icon-md" aria-hidden="true"></i><!-- ENDIF -->
+											{top_five_topic.TOPIC_TITLE}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME} &raquo; {L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a></span>
 										<!-- EVENT rmcgirr83_top_five_topiclist_row_append -->
 									<!-- ENDIF -->
 								</li>
