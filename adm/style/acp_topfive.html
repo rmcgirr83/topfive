@@ -22,6 +22,11 @@
 				<input type="radio" class="radio" name="top_five_location" value="0" <!-- IF not LOCATION -->checked="checked"<!-- ENDIF --> /> {L_BOTTOM_OF_FORUM}</dd>
 		</dl>
 		<dl>
+			<dt><label>{L_TF_AVATARS}</label><br />{L_TF_AVATARS_EXPLAIN}</dt>
+			<dd><input type="radio" class="radio" name="top_five_avatars" value="1" <!-- IF AVATARS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="top_five_avatars" value="0" <!-- IF not AVATARS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>		
+		<dl>
 			<dt><label>{L_TF_HOWMANY}</label><br />{L_TF_HOWMANY_EXPLAIN}</dt>
 			<dd><input type="text" name="top_five_how_many" size="10" value="{HOWMANY}" /></dd>
 		</dl>

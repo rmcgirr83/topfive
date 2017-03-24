@@ -180,11 +180,15 @@ class topfive
 
 			$is_guest = ($row['user_id'] == ANONYMOUS) ? true : false;
 
+			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars')) ? true : false;
+
+			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . phpbb_get_user_avatar($row) . '</span>&nbsp;' : '';
+
 			$tpl_ary = array(
 				'U_TOPIC'			=> $view_topic_url,
 				'U_FORUM'			=> $forum_name_url,
 				'S_UNREAD'			=> ($post_unread) ? true : false,
-				'USERNAME_FULL'		=> ($is_guest || !$this->auth->acl_get('u_viewprofile')) ? $this->user->lang['POST_BY_AUTHOR'] . '&nbsp;<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;' . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->user->lang['POST_BY_AUTHOR'] . '&nbsp;<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;' . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'USERNAME_FULL'		=> ($is_guest || !$this->auth->acl_get('u_viewprofile')) ? $this->user->lang['BY'] . $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->user->lang['BY'] . $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'LAST_TOPIC_TIME'	=> $this->user->format_date($row['topic_last_post_time']),
 				'TOPIC_TITLE' 		=> $topic_title,
 				'FORUM_NAME'		=> $forum_name,
@@ -269,7 +273,12 @@ class topfive
 
 		foreach ($user_posts as $row)
 		{
-			$username_string = ($this->auth->acl_get('u_viewprofile')) ? '<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : '<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
+
+			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars')) ? true : false;
+
+			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . phpbb_get_user_avatar($row) . '</span>&nbsp;' : '';
+
+			$username_string = ($this->auth->acl_get('u_viewprofile')) ? $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
 
 			$this->template->assign_block_vars('top_five_active',array(
 				'S_SEARCH_ACTION'	=> append_sid("{$this->root_path}search.$this->php_ext", 'author_id=' . $row['user_id'] . '&amp;sr=posts'),
@@ -320,7 +329,11 @@ class topfive
 
 		foreach ($newest_users as $row)
 		{
-			$username_string = ($this->auth->acl_get('u_viewprofile')) ? '<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : '<span class="topfive-avatar">'.phpbb_get_user_avatar($row).'</span>&nbsp;'.get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
+			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars')) ? true : false;
+
+			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . phpbb_get_user_avatar($row) . '</span>&nbsp;' : '';
+
+			$username_string = ($this->auth->acl_get('u_viewprofile')) ? $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
 
 			$this->template->assign_block_vars('top_five_newest',array(
 				'REG_DATE'			=> $this->user->format_date($row['user_regdate']),

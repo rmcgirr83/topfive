@@ -66,6 +66,7 @@ class topfive_module
 			'LOCATION'			=> isset($config['top_five_location']) ? $config['top_five_location'] : false,
 			'ACTIVE'			=> isset($config['top_five_active']) ? $config['top_five_active'] : false,
 			'TF_EXCLUDED'		=> $this->forum_select($excluded_forums),
+			'AVATARS'		=> isset($config['top_five_avatars']) ? $config['top_five_avatars'] : false,
 
 			'U_ACTION'			=> $this->u_action,
 		));
@@ -87,12 +88,13 @@ class topfive_module
 		$config->set('top_five_show_admins_mods', $request->variable('top_five_show_admins_mods', true));
 		$config->set('top_five_location', $request->variable('top_five_location', true));
 		$config->set('top_five_active', $request->variable('top_five_active', true));
+
 		// variable should be '' as it is a string ("1, 2, 3928") here, not an integer.
 		$forums = $request->variable('selectForms',  array(''));
 		// change the array to a string
 		$forums  = implode(',', $forums);
-
 		$config->set('top_five_excluded', $forums);
+		$config->set('top_five_avatars', $request->variable('top_five_avatars',0));
 	}
 
 	/**

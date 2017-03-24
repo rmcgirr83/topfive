@@ -19,7 +19,7 @@ class topfive_info
 		return array(
 			'filename'	=> '\rmcgirr83\topfive\acp\topfive_module',
 			'title'		=> 'TF_ACP',
-			'version'	=> '1.0.0',
+			'version'	=> '1.1.1',
 			'modes'		=> array(
 				'settings'	=> array('title' => 'TF_CONFIG', 'auth'	=> 'ext_rmcgirr83/topfive', 'cat'	=> array('TOPFIVE_MOD')),
 			),

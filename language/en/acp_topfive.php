@@ -21,6 +21,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'TF_ACTIVE'		=> 'Enabled',
+	'TF_AVATARS'	=> 'Avatars',
+	'TF_AVATARS_EXPLAIN'	=> 'Choose yes or no to display users avatars',
 	'TF_TITLE'		=> 'Top Five Extension Settings',
 	'TOPFIVE_MOD'	=> 'Top Five',
 	'TF_CONFIG'		=> 'Settings',
