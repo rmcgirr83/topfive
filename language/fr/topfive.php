@@ -38,11 +38,9 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'TOP_FIVE'			=> 'Top de l’activité',
 	'NEWEST_TOPICS'		=> 'Nouveaux messages',
 	'NO_TOPIC_EXIST'	=> 'Aucun nouveau message',
 	'TOP_FIVE_ACTIVE'	=> 'Top des utilisateurs actifs',
 	'TOP_FIVE_NEWEST'	=> 'Nouveaux utilisateurs',
-	'IN'                => 'dans',
-	'BY'                => 'par :',
+	'BY'                => 'par&nbsp;',
 ));
