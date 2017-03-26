@@ -180,9 +180,10 @@ class topfive
 
 			$is_guest = ($row['user_id'] == ANONYMOUS) ? true : false;
 
-			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars')) ? true : false;
+			$user_avatar = phpbb_get_user_avatar($row);
+			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars') && !empty($user_avatar)) ? true : false;
 
-			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . phpbb_get_user_avatar($row) . '</span>&nbsp;' : '';
+			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . $user_avatar . '</span>&nbsp;' : '';
 
 			$tpl_ary = array(
 				'U_TOPIC'			=> $view_topic_url,
@@ -273,10 +274,10 @@ class topfive
 
 		foreach ($user_posts as $row)
 		{
+			$user_avatar = phpbb_get_user_avatar($row);
+			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars') && !empty($user_avatar)) ? true : false;
 
-			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars')) ? true : false;
-
-			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . phpbb_get_user_avatar($row) . '</span>&nbsp;' : '';
+			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . $user_avatar . '</span>&nbsp;' : '';
 
 			$username_string = ($this->auth->acl_get('u_viewprofile')) ? $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
 
@@ -329,9 +330,10 @@ class topfive
 
 		foreach ($newest_users as $row)
 		{
-			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars')) ? true : false;
+			$user_avatar = phpbb_get_user_avatar($row);
+			$display_avatar = (!empty($this->config['top_five_avatars']) && $this->user->optionget('viewavatars') && !empty($user_avatar)) ? true : false;
 
-			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . phpbb_get_user_avatar($row) . '</span>&nbsp;' : '';
+			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . $user_avatar . '</span>&nbsp;' : '';
 
 			$username_string = ($this->auth->acl_get('u_viewprofile')) ? $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
 
