@@ -139,7 +139,7 @@ class topfive
 
 		// grab all posts that meet criteria and auths
 		$sql_array = array(
-			'SELECT'	=> 'u.*, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
+			'SELECT'	=> 'u.user_id, u.username, u. user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
 			'FROM'		=> array(TOPICS_TABLE => 't'),
 			'LEFT_JOIN'	=> array(
 				array(
@@ -246,7 +246,7 @@ class topfive
 			$sql_other .=  ' user_posts <> 0';
 
 			// do the main sql query
-			$sql = 'SELECT *
+			$sql = 'SELECT user_id, username, user_colour, user_posts, user_avatar, user_avatar_width, user_avatar_height, user_avatar_type
 				FROM ' . USERS_TABLE . '
 				 ' . $sql_where . ' ' . $sql_and . '
 				' . $sql_other . '
@@ -302,7 +302,7 @@ class topfive
 			$newest_users = array();
 
 			// grab most recent registered users
-			$sql = 'SELECT *
+			$sql = 'SELECT user_id, username, user_colour, user_regdate, user_avatar, user_avatar_width, user_avatar_height, user_avatar_type
 				FROM ' . USERS_TABLE . '
 				' . $sql_where . '
 				' . $sql_and . '
