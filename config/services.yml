@@ -8,10 +8,12 @@ services:
             - '@content.visibility'
             - '@dbal.conn'
             - '@dispatcher'
+            - '@language'
             - '@template'
             - '@user'
             - '%core.root_path%'
             - '%core.php_ext%'
+            - '@?senky.relativedates.listener'
 
     rmcgirr83.topfive.listener:
         class: rmcgirr83\topfive\event\listener
