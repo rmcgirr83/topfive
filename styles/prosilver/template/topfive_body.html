@@ -3,7 +3,7 @@
 	<div class="inner">
 	<ul class="topiclist">
 		<li class="header">
-			<dl class="{% if S_PHPBB_IS_32 %}row-item{% else %}icon{% endif %}">
+			<dl class="row-item">
 				<dt><div class="list-inner">{{ lang('NEWEST_TOPICS') }}</div></dt>
 				<dd class="topics tf-active-header">{{ lang('TOP_FIVE_ACTIVE') }}</dd>
 				<dd class="lastpost"><span>{{ lang('TOP_FIVE_NEWEST') }}</span></dd>
@@ -23,7 +23,7 @@
 										{{ top_five_topic.NO_TOPIC_TITLE }}
 									{% else %}
 										<a href="{{ top_five_topic.U_TOPIC }}" class="topictitle subforum{% if top_five_topic.S_UNREAD %} unread{% else %} read{% endif %}">
-											{% if S_PHPBB_IS_32 %}<i class="icon fa-file-o fa-fw {% if top_five_topic.S_UNREAD %} icon-red{% else %} icon-blue{% endif %} icon-md" aria-hidden="true"></i>{% endif %}
+											<i class="icon fa-file-o fa-fw {% if top_five_topic.S_UNREAD %} icon-red{% else %} icon-blue{% endif %} icon-md" aria-hidden="true"></i>
 											{{ top_five_topic.TOPIC_TITLE }}</a><span class="meta">{{ top_five_topic.USERNAME_FULL }} &raquo; {{ top_five_topic.LAST_TOPIC_TIME }} &raquo; {{ lang('IN') }}&nbsp;<a href="{{ top_five_topic.U_FORUM }}">{{ top_five_topic.FORUM_NAME }}</a></span>
 										{% EVENT rmcgirr83_top_five_topiclist_row_append %}
 									{% endif %}

@@ -172,7 +172,7 @@ class topfive
 
 		// grab all posts that meet criteria and auths
 		$sql_array = [
-			'SELECT'	=> 'u.user_id, u.username, u. user_colour, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
+			'SELECT'	=> 'u.user_id, u.username, u. user_colour, u.user_avatar, u.user_avatar_type, u.user_avatar_height, u.user_avatar_width, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
 			'FROM'		=> [TOPICS_TABLE => 't'],
 			'LEFT_JOIN'	=> [
 				[
@@ -186,7 +186,7 @@ class topfive
 			],
 			'WHERE'		=> $this->db->sql_in_set('t.topic_id', $topic_ids),
 			'ORDER_BY'	=> 't.topic_last_post_time DESC',
-		);
+		];
 		/**
 		* Event to modify the SQL query before the topics data is retrieved
 		*

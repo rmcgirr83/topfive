@@ -97,7 +97,7 @@ class listener implements EventSubscriberInterface
 		}
 
 		// add lang file
-		$this->user->add_lang_ext('rmcgirr83/topfive', 'topfive');
+		$this->language->add_lang('topfive', 'rmcgirr83/topfive');
 
 		$this->topfive->topposters();
 		$this->topfive->newusers();
@@ -114,7 +114,6 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars([
 			'S_TOPFIVE'	=>	$this->config['top_five_active'],
 			'S_TOPFIVE_LOCATION'	=> $this->config['top_five_location'],
-			'S_PHPBB_IS_32'	=> phpbb_version_compare(PHPBB_VERSION, '3.2.0', '>=') ? true : false,
 		]);
 	}
 }
