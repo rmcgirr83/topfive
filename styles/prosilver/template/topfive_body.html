@@ -1,14 +1,14 @@
-<a class="category<!-- IF S_TOPFIVE_HIDDEN --> hidden-category<!-- ENDIF -->" style="display: none; height: 0"></a>
+<a class="category{% if S_TOPFIVE_HIDDEN %} hidden-category{% endif %}" style="display: none; height: 0"></a>
 <div class="forabg responsive-hide" id="top_five">
 	<div class="inner">
 	<ul class="topiclist">
 		<li class="header">
-			<dl class="<!-- IF S_PHPBB_IS_32 -->row-item<!-- ELSE -->icon<!-- ENDIF -->">
-				<dt><div class="list-inner">{L_NEWEST_TOPICS}</div></dt>
-				<dd class="topics tf-active-header">{L_TOP_FIVE_ACTIVE}</dd>
-				<dd class="lastpost"><span>{L_TOP_FIVE_NEWEST}</span></dd>
+			<dl class="{% if S_PHPBB_IS_32 %}row-item{% else %}icon{% endif %}">
+				<dt><div class="list-inner">{{ lang('NEWEST_TOPICS') }}</div></dt>
+				<dd class="topics tf-active-header">{{ lang('TOP_FIVE_ACTIVE') }}</dd>
+				<dd class="lastpost"><span>{{ lang('TOP_FIVE_NEWEST') }}</span></dd>
 			</dl>
-			<!-- IF U_TOPFIVE_COLLAPSE_URL --><a href="{U_TOPFIVE_COLLAPSE_URL}" class="collapse-btn collapse-<!-- IF S_TOPFIVE_HIDDEN -->show<!-- ELSE -->hide<!-- ENDIF -->" data-hidden="{S_TOPFIVE_HIDDEN}" data-ajax="phpbb_collapse" data-overlay="true" title="{L_COLLAPSIBLE_CATEGORIES_TITLE}" style="display: none; line-height: 0;"></a><!-- ENDIF -->
+			{% if U_TOPFIVE_COLLAPSE_URL %}<a href="{{ U_TOPFIVE_COLLAPSE_URL }}" class="collapse-btn collapse-{% if S_TOPFIVE_HIDDEN %}show{% else %}hide{% endif %}" data-hidden="{{ S_TOPFIVE_HIDDEN }}" data-ajax="phpbb_collapse" data-overlay="true" title="{{ lang('COLLAPSIBLE_CATEGORIES_TITLE') }}" style="display: none; line-height: 0;"></a>{% endif %}
 		</li>
 	</ul>
 	<ul class="topiclist forums">
@@ -17,37 +17,37 @@
 				<dt>
 					<div class="list-inner">
 						<ul>
-							<!-- BEGIN top_five_topic -->
+							{% for top_five_topic in loops.top_five_topic %}
 								<li>
-									<!-- IF top_five_topic.NO_TOPIC_TITLE-->
-										{top_five_topic.NO_TOPIC_TITLE}
-									<!-- ELSE -->
-										<a href="{top_five_topic.U_TOPIC}" class="topictitle subforum<!-- IF top_five_topic.S_UNREAD --> unread<!-- ELSE --> read<!-- ENDIF -->">
-											<!-- IF S_PHPBB_IS_32 --><i class="icon fa-file-o fa-fw <!-- IF top_five_topic.S_UNREAD --> icon-red<!-- ELSE --> icon-blue<!-- ENDIF --> icon-md" aria-hidden="true"></i><!-- ENDIF -->
-											{top_five_topic.TOPIC_TITLE}</a><span class="meta">{top_five_topic.USERNAME_FULL} &raquo; {top_five_topic.LAST_TOPIC_TIME} &raquo; {L_IN}&nbsp;<a href="{top_five_topic.U_FORUM}">{top_five_topic.FORUM_NAME}</a></span>
-										<!-- EVENT rmcgirr83_top_five_topiclist_row_append -->
-									<!-- ENDIF -->
+									{% if top_five_topic.NO_TOPIC_TITLE%}
+										{{ top_five_topic.NO_TOPIC_TITLE }}
+									{% else %}
+										<a href="{{ top_five_topic.U_TOPIC }}" class="topictitle subforum{% if top_five_topic.S_UNREAD %} unread{% else %} read{% endif %}">
+											{% if S_PHPBB_IS_32 %}<i class="icon fa-file-o fa-fw {% if top_five_topic.S_UNREAD %} icon-red{% else %} icon-blue{% endif %} icon-md" aria-hidden="true"></i>{% endif %}
+											{{ top_five_topic.TOPIC_TITLE }}</a><span class="meta">{{ top_five_topic.USERNAME_FULL }} &raquo; {{ top_five_topic.LAST_TOPIC_TIME }} &raquo; {{ lang('IN') }}&nbsp;<a href="{{ top_five_topic.U_FORUM }}">{{ top_five_topic.FORUM_NAME }}</a></span>
+										{% EVENT rmcgirr83_top_five_topiclist_row_append %}
+									{% endif %}
 								</li>
-							<!-- END top_five_topic -->
+							{% endfor %}
 						</ul>
 					</div>
 				</dt>
 				<dd class="topics tf-most-active">
 					<ul>
-						<!-- BEGIN top_five_active -->
+						{% for top_five_active in loops.top_five_active %}
 							<li>
-								<span class="meta">{top_five_active.USERNAME_FULL}<span><br />&nbsp;&nbsp;{L_POSTS}{L_COLON} <a href="{top_five_active.S_SEARCH_ACTION}">{top_five_active.POSTS}</a></span></span>
+								<span class="meta">{{ top_five_active.USERNAME_FULL }}<span><br />&nbsp;&nbsp;{{ lang('POSTS') }}{{ lang('COLON') }} <a href="{{ top_five_active.S_SEARCH_ACTION }}">{{ top_five_active.POSTS }}</a></span></span>
 							</li>
-						<!-- END top_five_active -->
+						{% endfor %}
 					</ul>
 				</dd>
 				<dd class="lastpost tf-newest"><span>
 					<ul>
-						<!-- BEGIN top_five_newest -->
+						{% for top_five_newest in loops.top_five_newest %}
 							<li>
-								<span class="meta">{top_five_newest.USERNAME_FULL}<span><br />&nbsp;&nbsp;{L_JOINED}{L_COLON} {top_five_newest.REG_DATE}</span></span>
+								<span class="meta">{{ top_five_newest.USERNAME_FULL }}<span><br />&nbsp;&nbsp;{{ lang('JOINED') }}{{ lang('COLON') }} {{ top_five_newest.REG_DATE }}</span></span>
 							</li>
-						<!-- END top_five_newest -->
+						{% endfor %}
 					</ul>
 				</span></dd>
 			</dl>

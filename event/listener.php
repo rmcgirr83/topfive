@@ -12,6 +12,12 @@ namespace rmcgirr83\topfive\event;
 /**
 * @ignore
 */
+use rmcgirr83\topfive\core\topfive;
+use phpbb\config\config;
+use phpbb\language\language;
+use phpbb\template\template;
+use phpbb\controller\helper;
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -25,27 +31,27 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\config\config */
 	protected $config;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	/** @var \phpbb\template\template */
 	protected $template;
-
-	/** @var \phpbb\user */
-	protected $user;
 
 	/** @var \phpbb\controller\helper */
 	protected $helper;
 
 	public function __construct(
-		\rmcgirr83\topfive\core\topfive $topfive,
-		\phpbb\config\config $config,
-		\phpbb\template\template $template,
-		\phpbb\user $user,
-		\phpbb\controller\helper $helper,
+		topfive $topfive,
+		config $config,
+		language $language,
+		template $template,
+		helper $helper,
 		\phpbb\collapsiblecategories\operator\operator $operator = null)
 	{
 		$this->topfive = $topfive;
 		$this->config = $config;
+		$this->language = $language;
 		$this->template = $template;
-		$this->user = $user;
 		$this->helper = $helper;
 		$this->operator = $operator;
 	}
@@ -54,8 +60,27 @@ class listener implements EventSubscriberInterface
 	{
 
 		return array(
+			'core.acp_extensions_run_action_after'	=> 'acp_extensions_run_action_after',
 			'core.index_modify_page_title'	=> 'main',
 		);
+	}
+
+	/* Display additional metdate in extension details
+	*
+	* @param $event			event object
+	* @param return null
+	* @access public
+	*/
+	public function acp_extensions_run_action_after($event)
+	{
+		if ($event['ext_name'] == 'rmcgirr83/topfive' && $event['action'] == 'details')
+		{
+			$this->language->add_lang('acp_topfive', $event['ext_name']);
+			$this->template->assign_vars([
+				'L_BUY_ME_A_BEER_EXPLAIN'		=> $this->language->lang('BUY ME A BEER_EXPLAIN', '<a href="' . $this->language->lang('BUY_ME_A_BEER_URL') . '" target="_blank" rel=”noreferrer noopener”>', '</a>'),
+				'S_BUY_ME_A_BEER' => true,
+			]);
+		}
 	}
 
 	public function main($event)

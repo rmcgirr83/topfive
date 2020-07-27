@@ -3,28 +3,29 @@
 	"type": "phpbb-extension",
 	"description": "Displays statistics of the latest new posts, new users and most active users on the forum index page.",
 	"homepage": "https://github.com/RMcGirr83/topfive",
-	"version": "1.1.2",
-	"time": "2017-05-03",
+	"version": "1.2.0",
+	"time": "2020-07-27",
     "keywords": [
         "phpbb",
         "extension",
         "top five"
     ],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"authors": [
 		{
 			"name": "Rich McGirr",
-			"homepage": "https://www.phpbb.com/customise/db/author/rmcgirr83/contributions",
+			"homepage": "https://paypal.me/rmcgirr83",
 			"role": "Lead Developer"
 		}
 	],
 	"require": {
-        "php": ">=5.3.3"
+        "php": ">=7.1",
+		"phpbb/phpbb": ">=3.2"
 	},
 	"extra": {
-		"display-name": "Top Five",
+		"display-name": "Top Five Extension",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.2"
+			"phpbb/phpbb": ">=3.2"
 		},
 		"version-check": {
 			"host": "www.phpbb.com",

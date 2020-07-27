@@ -18,8 +18,8 @@ services:
         arguments:
             - '@rmcgirr83.topfive.topfive'
             - '@config'
+            - '@language'
             - '@template'
-            - '@user'
             - '@controller.helper'
             - '@?phpbb.collapsiblecategories.operator'
         tags:

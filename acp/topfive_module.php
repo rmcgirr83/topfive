@@ -15,13 +15,13 @@ class topfive_module
 
 	function main($id, $mode)
 	{
-		global $db, $user, $auth, $template, $cache, $request;
-		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
+		global $cache, $config, $language, $request, $template;
+		global $phpbb_root_path, $phpEx;
 
-		$user->add_lang('acp/common');
-		$user->add_lang_ext('rmcgirr83/topfive', 'acp_topfive');
+		$language->add_lang('acp/common');
+		$language->add_lang('acp_topfive', 'rmcgirr83/topfive');
 		$this->tpl_name = 'acp_topfive';
-		$this->page_title = $user->lang['TOPFIVE_MOD'];
+		$this->page_title = $language->lang('TOPFIVE_MOD');
 		add_form_key('acp_topfive');
 
 		// get the excluded forums
@@ -42,9 +42,6 @@ class topfive_module
 			$validate_row = array('top_five_how_many' => array('num', false, 5, 100));
 			$error = validate_data($check_row, $validate_row);
 
-			// Replace "error" strings with their real, localised form
-			$error = array_map(array($user, 'lang'), $error);
-
 			if (!sizeof($error))
 			{
 
@@ -53,7 +50,7 @@ class topfive_module
 				$cache->destroy('_top_five_newest_users');
 				$cache->destroy('_top_five_posters');
 
-				trigger_error($user->lang['TF_SAVED'] . adm_back_link($this->u_action));
+				trigger_error($language->lang('TF_SAVED') . adm_back_link($this->u_action));
 			}
 		}
 
@@ -68,6 +65,7 @@ class topfive_module
 			'TF_EXCLUDED'		=> $this->forum_select($excluded_forums),
 			'AVATARS'		=> isset($config['top_five_avatars']) ? $config['top_five_avatars'] : false,
 
+			'L_BUY_ME_A_BEER_EXPLAIN'		=> $language->lang('BUY ME A BEER_EXPLAIN', '<a href="' . $language->lang('BUY_ME_A_BEER_URL') . '" target="_blank" rel=”noreferrer noopener”>', '</a>'),
 			'U_ACTION'			=> $this->u_action,
 		));
 	}
