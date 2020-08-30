@@ -65,7 +65,6 @@ class topfive_module
 			'TF_EXCLUDED'		=> $this->forum_select($excluded_forums),
 			'AVATARS'		=> isset($config['top_five_avatars']) ? $config['top_five_avatars'] : false,
 
-			'L_BUY_ME_A_BEER_EXPLAIN'		=> $language->lang('BUY ME A BEER_EXPLAIN', '<a href="' . $language->lang('BUY_ME_A_BEER_URL') . '" target="_blank" rel=”noreferrer noopener”>', '</a>'),
 			'U_ACTION'			=> $this->u_action,
 		));
 	}
