@@ -104,8 +104,8 @@ class listener implements EventSubscriberInterface
 		{
 			$fid = 'topfive'; // can be any unique string to identify your extension's collapsible element
 			$this->template->assign_vars([
-				'S_NATIONALFLAGS_HIDDEN' => $this->operator->is_collapsed($fid),
-				'U_NATIONALFLAGS_COLLAPSE_URL' => $this->operator->get_collapsible_link($fid),
+				'S_TOPFIVE_HIDDEN' => $this->operator->is_collapsed($fid),
+				'U_TOPFIVE_COLLAPSE_URL' => $this->operator->get_collapsible_link($fid),
 			]);
 		}
 		$this->template->assign_vars([
