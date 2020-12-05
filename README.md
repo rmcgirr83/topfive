@@ -5,7 +5,6 @@ phpBB extension that displays the latest topics, new users and most active users
 
 This extension is the 3.2.x version of the [3.0.x Top Five Mod](https://www.phpbb.com/customise/db/mod/top_five/)
 
-[![Build Status](https://travis-ci.com/rmcgirr83/topfive.svg?branch=master)](https://travis-ci.com/rmcgirr83/topfive)
 ## Installation
 
 ### 1. clone
