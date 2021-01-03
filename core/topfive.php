@@ -66,8 +66,8 @@ class topfive
 		language $language,
 		template $template,
 		user $user,
-		$phpbb_root_path,
-		$php_ext,
+		string $phpbb_root_path,
+		string $php_ext,
 		\senky\relativedates\event\listener $relativedates = null)
 	{
 		$this->auth = $auth;
@@ -85,7 +85,7 @@ class topfive
 	}
 
 	/**
-	* Display activity on the index page
+	* Display activity
 	*
 	* @param	string	$tpl_loopname	Name of the html file
 	* @return 	null

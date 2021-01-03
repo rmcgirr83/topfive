@@ -23,9 +23,9 @@
 				<input type="radio" class="radio" name="top_five_active" value="0" {% if not ACTIVE %}checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
 		</dl>
 		<dl>
-			<dt><label>{{ lang('TF_LOCATION') }}</label><br />{{ lang('TF_LOCATION_EXPLAIN') }}</dt>
-			<dd><input type="radio" class="radio" name="top_five_location" value="1" {% if LOCATION %}checked="checked"{% endif %}/> {{ lang('TOP_OF_FORUM') }} &nbsp;
-				<input type="radio" class="radio" name="top_five_location" value="0" {% if not LOCATION %}checked="checked"{% endif %} /> {{ lang('BOTTOM_OF_FORUM') }}</dd>
+			<dt><label>{{ lang('TF_LOCATION') }}{{ lang('COLON') }}</label><br>
+			<span>{{ lang('TF_LOCATION_EXPLAIN') }}</span></dt>
+			<dd>{{ LOCATION }}</dd>
 		</dl>
 		<dl>
 			<dt><label>{{ lang('TF_AVATARS') }}</label><br />{{ lang('TF_AVATARS_EXPLAIN') }}</dt>
