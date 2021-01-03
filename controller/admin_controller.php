@@ -15,7 +15,6 @@ use phpbb\config\config;
 use phpbb\language\language;
 use phpbb\request\request;
 use phpbb\template\template;
-use rmcgirr83\contactadmin\core\contactadmin as contactadmin;
 
 class admin_controller
 {
