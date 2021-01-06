@@ -1,5 +1,5 @@
 imports:
-    - { resource: constants.yml }
+    - { resource: topfive_constants.yml }
 
 services:
     rmcgirr83.topfive.admin.controller:
@@ -12,7 +12,7 @@ services:
             - '@template'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '%constants%'
+            - '%topfive_constants%'
 
     rmcgirr83.topfive.topfive:
         class: rmcgirr83\topfive\core\topfive
@@ -38,7 +38,7 @@ services:
             - '@language'
             - '@template'
             - '@controller.helper'
-            - '%constants%'
+            - '%topfive_constants%'
             - '@?phpbb.collapsiblecategories.operator'
         tags:
             - { name: event.listener }

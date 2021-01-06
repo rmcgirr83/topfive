@@ -1,5 +1,5 @@
 parameters:
-    constants:
+    topfive_constants:
         top_of_index: 0
         bottom_of_index: 1
         top_of_entire_forum: 2

@@ -39,8 +39,8 @@ class admin_controller
 	/** @var string phpEx */
 	protected $php_ext;
 
-	/* @var array constants */
-	protected $constants;
+	/* @var array topfive_constants */
+	protected $topfive_constants;
 
 	/** @var string Custom form action */
 	protected $u_action;
@@ -55,7 +55,7 @@ class admin_controller
 	* @param template					$template			Template object
 	* @param string						$root_path			phpBB root path
 	* @param string						$php_ext			phpEx
-	* @param array						$constants			Constants for the extension
+	* @param array						$topfive_constants	Constants for the extension
 	* @access public
 	*/
 	public function __construct(
@@ -66,7 +66,7 @@ class admin_controller
 			template $template,
 			string $root_path,
 			string $php_ext,
-			array $constants)
+			array $topfive_constants)
 	{
 		$this->cache = $cache;
 		$this->config = $config;
@@ -75,7 +75,7 @@ class admin_controller
 		$this->template = $template;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
-		$this->constants = $constants;
+		$this->topfive_constants = $topfive_constants;
 	}
 
 	public function display_options()
@@ -166,10 +166,10 @@ class admin_controller
 	public function location($value, $key = '')
 	{
 		$radio_ary = [
-			$this->constants['top_of_index']	=> 'TOP_OF_FORUM',
-			$this->constants['bottom_of_index']	=> 'BOTTOM_OF_FORUM',
-			$this->constants['top_of_entire_forum']	=> 'TOP_OF_ENTIRE_FORUM',
-			$this->constants['bottom_of_entire_forum'] => 'BOTTOM_OF_ENTIRE_FORUM',
+			$this->topfive_constants['top_of_index']	=> 'TOP_OF_FORUM',
+			$this->topfive_constants['bottom_of_index']	=> 'BOTTOM_OF_FORUM',
+			$this->topfive_constants['top_of_entire_forum']	=> 'TOP_OF_ENTIRE_FORUM',
+			$this->topfive_constants['bottom_of_entire_forum'] => 'BOTTOM_OF_ENTIRE_FORUM',
 		];
 
 		return h_radio('top_five_location', $radio_ary, $value, $key);
