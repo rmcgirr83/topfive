@@ -50,10 +50,10 @@ class topfive
 	/** @var user */
 	protected $user;
 
-	/** @var string phpBB root path */
+	/** @var string phpbb_root_path */
 	protected $phpbb_root_path;
 
-	/** @var string PHP extension */
+	/** @var string php_ext */
 	protected $php_ext;
 
 	public function __construct(

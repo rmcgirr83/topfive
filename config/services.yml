@@ -37,7 +37,9 @@ services:
             - '@config'
             - '@language'
             - '@template'
+            - '@user'
             - '@controller.helper'
+            - '%core.php_ext%'
             - '%topfive_constants%'
             - '@?phpbb.collapsiblecategories.operator'
         tags:
