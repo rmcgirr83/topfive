@@ -1,0 +1,7 @@
+
+/* Fixes avatar aspect-ratio */
+#top_five .topfive-avatar img { 
+	max-height: 20px;
+    vertical-align: middle;
+    width: auto;
+}
