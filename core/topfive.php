@@ -206,7 +206,10 @@ class topfive
 			$forum_name = $row['forum_name'];
 
 			$post_unread = (isset($topic_tracking_info[$forum_id][$topic_id]) && $row['topic_last_post_time'] > $topic_tracking_info[$forum_id][$topic_id]) ? true : false;
-			$view_topic_url = append_sid("{$this->root_path}viewtopic.$this->php_ext", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id']);
+			$view_topic_url = !empty($post_unread) ? append_sid("{$this->root_path}viewtopic.$this->php_ext", 't=' . $topic_id . '&amp;view=unread') . '#unread' : append_sid("{$this->root_path}viewtopic.$this->php_ext", 't=' . $topic_id);
+			/** To go to the last post in a topic use the below as the last argument in the above $view_topic_url variable
+			append_sid("{$this->root_path}viewtopic.$this->php_ext", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id'])
+			**/
 			$forum_name_url = append_sid("{$this->root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
 			$topic_title = censor_text($row['topic_title']);
 			$topic_title = truncate_string($topic_title, 60, 255, false, $this->language->lang('ELLIPSIS'));

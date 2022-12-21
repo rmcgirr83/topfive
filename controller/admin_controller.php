@@ -80,7 +80,6 @@ class admin_controller
 
 	public function display_options()
 	{
-		$this->language->add_lang(['acp/common']);
 		$this->language->add_lang('acp_topfive', 'rmcgirr83/topfive');
 
 		// Create a form key for preventing CSRF attacks

@@ -130,6 +130,7 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars([
 			'S_TOPFIVE'	=>	true,
 			'S_TOPFIVE_LOCATION'	=> $this->config['top_five_location'],
+			'S_TOPFIVE_ACTIVE'	=> $this->config['top_five_active'],
 		]);
 	}
 
