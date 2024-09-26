@@ -69,7 +69,7 @@ class topfive
 		string $phpbb_root_path,
 		string $php_ext,
 		\senky\relativedates\event\listener $relativedates = null,
-		\rmcgirr83\nationalflags\core\nationalflags $nationalflags= null)
+		\rmcgirr83\nationalflags\core\nationalflags $nationalflags = null)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
