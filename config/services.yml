@@ -29,6 +29,7 @@ services:
             - '%core.root_path%'
             - '%core.php_ext%'
             - '@?senky.relativedates.listener'
+            - '@?rmcgirr83.nationalflags.nationalflags'
 
     rmcgirr83.topfive.listener:
         class: rmcgirr83\topfive\event\listener

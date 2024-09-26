@@ -102,10 +102,11 @@ class admin_controller
 			$check_row = array('top_five_how_many' => $this->request->variable('top_five_how_many', 0));
 			$validate_row = array('top_five_how_many' => array('num', false, 5, 100));
 			$error = validate_data($check_row, $validate_row);
+			// Replace "error" strings with their real, localised form
+			$error = array_map(array($this->language, 'lang'), $error);
 
 			if (!sizeof($error))
 			{
-
 				$this->set_options();
 
 				$this->cache->destroy('_top_five_newest_users');
@@ -155,23 +156,24 @@ class admin_controller
 	 */
 	private function forum_select($value)
 	{
-
 		return '<select id="top_five_excluded" name="selectForms[]" multiple="multiple">' . make_forum_select($value, false, true, true) . '</select>';
 	}
 
 	/**
 	 * Create the selection for the post method
 	 */
-	public function location($value, $key = '')
+	public function location($location = 0)
 	{
-		$radio_ary = [
-			$this->topfive_constants['top_of_index']	=> 'TOP_OF_FORUM',
-			$this->topfive_constants['bottom_of_index']	=> 'BOTTOM_OF_FORUM',
-			$this->topfive_constants['top_of_entire_forum']	=> 'TOP_OF_ENTIRE_FORUM',
-			$this->topfive_constants['bottom_of_entire_forum'] => 'BOTTOM_OF_ENTIRE_FORUM',
-		];
+		// location options
+		$location_text = [$this->topfive_constants['top_of_index'] => $this->language->lang('TOP_OF_FORUM'), $this->topfive_constants['bottom_of_index'] => $this->language->lang('BOTTOM_OF_FORUM'), $this->topfive_constants['top_of_entire_forum'] => $this->language->lang('TOP_OF_ENTIRE_FORUM'), $this->topfive_constants['bottom_of_entire_forum'] => $this->language->lang('BOTTOM_OF_ENTIRE_FORUM')];
+		$location_options = '';
+		foreach ($location_text as $value => $text)
+		{
+			$selected = ($value == $location) ? ' selected="selected"' : '';
+			$location_options .= "<option value='{$value}'$selected>$text</option>";
+		}
 
-		return h_radio('top_five_location', $radio_ary, $value, $key);
+		return $location_options;
 	}
 
 	/**

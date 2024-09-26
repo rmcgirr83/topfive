@@ -68,7 +68,8 @@ class topfive
 		user $user,
 		string $phpbb_root_path,
 		string $php_ext,
-		\senky\relativedates\event\listener $relativedates = null)
+		\senky\relativedates\event\listener $relativedates = null,
+		\rmcgirr83\nationalflags\core\nationalflags $nationalflags= null)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
@@ -82,6 +83,7 @@ class topfive
 		$this->root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->relativedates = $relativedates;
+		$this->nationalflags = $nationalflags;
 	}
 
 	/**
@@ -172,7 +174,7 @@ class topfive
 
 		// grab all posts that meet criteria and auths
 		$sql_array = [
-			'SELECT'	=> 'u.user_id, u.username, u. user_colour, u.user_avatar, u.user_avatar_type, u.user_avatar_height, u.user_avatar_width, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
+			'SELECT'	=> 'u.user_id, u.username, u.user_colour, u.user_avatar, u.user_avatar_type, u.user_avatar_height, u.user_avatar_width, t.topic_title, t.forum_id, t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_last_post_time, t.topic_last_poster_name, f.forum_name',
 			'FROM'		=> [TOPICS_TABLE => 't'],
 			'LEFT_JOIN'	=> [
 				[
@@ -187,6 +189,11 @@ class topfive
 			'WHERE'		=> $this->db->sql_in_set('t.topic_id', $topic_ids),
 			'ORDER_BY'	=> 't.topic_last_post_time DESC',
 		];
+		if ($this->nationalflags !== null)
+		{
+			$sql_array['SELECT'].= ', u.user_flag';
+		}
+
 		/**
 		* Event to modify the SQL query before the topics data is retrieved
 		*
@@ -230,15 +237,25 @@ class topfive
 			{
 				$last_topic_time = $this->user->format_date($row['topic_last_post_time']);
 			}
+
+			$user_flag = '';
+			// nationalflags installed?
+			if (!empty($row['user_flag']))
+			{
+				$user_flag = $this->nationalflags->get_user_flag($row['user_flag'], 12);
+			}
+
 			$tpl_ary = [
-				'U_TOPIC'			=> $view_topic_url,
-				'U_FORUM'			=> $forum_name_url,
-				'S_UNREAD'			=> ($post_unread) ? true : false,
-				'USERNAME_FULL'		=> ($is_guest || !$this->auth->acl_get('u_viewprofile')) ? $this->language->lang('BY') . $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->language->lang('BY') . $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'U_TOPIC'	=> $view_topic_url,
+				'U_FORUM'	=> $forum_name_url,
+				'S_UNREAD'	=> ($post_unread) ? true : false,
+				'USERNAME_FULL'	=> ($is_guest || !$this->auth->acl_get('u_viewprofile')) ? $this->language->lang('BY') . $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour'], $row['topic_last_poster_name']) : $this->language->lang('BY') . $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'LAST_TOPIC_TIME'	=> $last_topic_time,
-				'TOPIC_TITLE' 		=> $topic_title,
-				'FORUM_NAME'		=> $forum_name,
+				'TOPIC_TITLE'	=> $topic_title,
+				'FORUM_NAME'	=> $forum_name,
+				'USER_FLAG'	=> !empty($user_flag) ? $user_flag : '',
 			];
+
 			/**
 			* Modify the topic data before it is assigned to the template
 			*
@@ -266,46 +283,34 @@ class topfive
 		$howmany = $this->howmany();
 		$sql_where = $this->ignore_users();
 
-		//set two variables for the sql
-		$sql_and = $sql_other = '';
-
 		if (($user_posts = $this->cache->get('_top_five_posters')) === false)
 		{
+			$user_posts = [];
 
-			$user_posts = $admin_mod_array = [];
-			// quick check for forum moderators and administrators
-			// some may not want to show them
-			$show_admins_mods = $this->config['top_five_show_admins_mods'];
-
-			if (!$show_admins_mods)
-			{
-				// grab all admins
-				$admin_ary = $this->auth->acl_get_list(false, 'a_', false);
-				$admin_ary = (!empty($admin_ary[0]['a_'])) ? $admin_ary[0]['a_'] : [];
-
-				//grab all mods
-				$mod_ary = $this->auth->acl_get_list(false,'m_', false);
-				$mod_ary = (!empty($mod_ary[0]['m_'])) ? $mod_ary[0]['m_'] : [];
-				$admin_mod_array = array_unique(array_merge($admin_ary, $mod_ary));
-				if (sizeof($admin_mod_array))
-				{
-					$sql_and = empty($sql_where) ? ' WHERE' : ' AND';
-					$sql_and .= ' ' . $this->db->sql_in_set('user_id', $admin_mod_array, true);
-				}
-			}
-			$sql_other = (empty($sql_and) && empty($sql_where)) ? ' WHERE' : ' AND';
-			$sql_other .=  ' user_posts <> 0';
+			$sql_where .= empty($sql_where) ? 'u.user_posts <> 0' : ' AND u.user_posts <> 0';
 
 			// do the main sql query
-			$sql = 'SELECT user_id, username, user_colour, user_posts, user_avatar, user_avatar_width, user_avatar_height, user_avatar_type
-				FROM ' . USERS_TABLE . '
-				 ' . $sql_where . ' ' . $sql_and . '
-				' . $sql_other . '
-				ORDER BY user_posts DESC';
+			$sql_array = [
+				'SELECT' => 'u.user_id, u.username, u.user_colour, u.user_posts, u.user_avatar, u.user_avatar_width, u.user_avatar_height, u.user_avatar_type, u.user_lastpost_time',
+				'FROM' => [USERS_TABLE => 'u'],
+				'WHERE' => $sql_where,
+				'ORDER BY' => 'u.user_posts DESC',
+			];
 
-			$result = $this->db->sql_query_limit($sql, $howmany);
+			if ($this->nationalflags !== null)
+			{
+				$sql_array['SELECT'] .= ', u.user_flag';
+			}
+			$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
+
 			while ($row = $this->db->sql_fetchrow($result))
 			{
+				$user_flag = '';
+				// nationalflags installed?
+				if (!empty($row['user_flag']))
+				{
+					$user_flag = $this->nationalflags->get_user_flag($row['user_flag'], 12);
+				}
 				$user_posts[$row['user_id']] = [
 					'user_id'      => $row['user_id'],
 					'username'      => $row['username'],
@@ -315,6 +320,8 @@ class topfive
 					'user_avatar_width'	=> $row['user_avatar_width'],
 					'user_avatar_height'	=> $row['user_avatar_height'],
 					'user_avatar_type'	=> $row['user_avatar_type'],
+					'user_lastpost_time'	=> $row['user_lastpost_time'],
+					'user_flag'	=> !empty($user_flag) ? $user_flag : '',
 				];
 			}
 			$this->db->sql_freeresult($result);
@@ -331,11 +338,21 @@ class topfive
 			$user_avatar = $display_avatar ? '<span class="topfive-avatar">' . $user_avatar . '</span>&nbsp;' : '';
 
 			$username_string = ($this->auth->acl_get('u_viewprofile')) ? $user_avatar . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) : $user_avatar . get_username_string('no_profile', $row['user_id'], $row['username'], $row['user_colour']);
+			if ($this->relativedates !== null)
+			{
+				$user_lastpost_time = $this->user->format_date($row['user_lastpost_time'], false, false, false);
+			}
+			else
+			{
+				$user_lastpost_time = $this->user->format_date($row['user_lastpost_time']);
+			}
 
 			$this->template->assign_block_vars('top_five_active',[
 				'S_SEARCH_ACTION'	=> append_sid("{$this->root_path}search.$this->php_ext", 'author_id=' . $row['user_id'] . '&amp;sr=posts'),
-				'POSTS' 			=> number_format($row['user_posts']),
-				'USERNAME_FULL'		=> $username_string,
+				'POSTS'	=> number_format($row['user_posts']),
+				'USERNAME_FULL'	=> $username_string,
+				'USER_LASTPOST_TIME'	=> $this->language->lang('USER_LASTPOST_TIME', $user_lastpost_time),
+				'USER_FLAG'	=> !empty($row['user_flag']) ? $row['user_flag'] : '',
 			]);
 		}
 	}
@@ -351,22 +368,34 @@ class topfive
 		$howmany = $this->howmany();
 		$sql_where = $this->ignore_users();
 
-		$sql_and = !empty($sql_where) ? ' AND user_inactive_reason = 0' : ' WHERE user_inactive_reason = 0';
+		$sql_where .= !empty($sql_where) ? ' AND u.user_inactive_reason = 0' : ' u.user_inactive_reason = 0';
 		// newest registered users
 		if (($newest_users = $this->cache->get('_top_five_newest_users')) === false)
 		{
 			$newest_users = [];
 
 			// grab most recent registered users
-			$sql = 'SELECT user_id, username, user_colour, user_regdate, user_avatar, user_avatar_width, user_avatar_height, user_avatar_type
-				FROM ' . USERS_TABLE . '
-				' . $sql_where . '
-				' . $sql_and . '
-				ORDER BY user_regdate DESC';
-			$result = $this->db->sql_query_limit($sql, $howmany);
+			$sql_array = [
+				'SELECT' => 'u.user_id, u.username, u.user_colour, u.user_regdate, u.user_avatar, u.user_avatar_width, u.user_avatar_height, u.user_avatar_type',
+				'FROM' => [USERS_TABLE => 'u'],
+				'WHERE' => $sql_where,
+				'ORDER BY' =>  'u.user_regdate DESC',
+			];
+			if ($this->nationalflags !== null)
+			{
+				$sql_array['SELECT'] .= ', u.user_flag';
+			}
+			$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_array), $howmany);
 
 			while ($row = $this->db->sql_fetchrow($result))
 			{
+				$user_flag = '';
+				// nationalflags installed?
+				if (!empty($row['user_flag']))
+				{
+					$user_flag = $this->nationalflags->get_user_flag($row['user_flag'], 12);
+				}
+
 				$newest_users[$row['user_id']] = [
 					'user_id'				=> $row['user_id'],
 					'username'				=> $row['username'],
@@ -376,6 +405,7 @@ class topfive
 					'user_avatar_width'		=> $row['user_avatar_width'],
 					'user_avatar_height'	=> $row['user_avatar_height'],
 					'user_avatar_type'		=> $row['user_avatar_type'],
+					'user_flag'				=> !empty($user_flag) ? $user_flag : '',
 				];
 			}
 			$this->db->sql_freeresult($result);
@@ -396,6 +426,7 @@ class topfive
 			$this->template->assign_block_vars('top_five_newest',[
 				'REG_DATE'			=> $this->user->format_date($row['user_regdate']),
 				'USERNAME_FULL'		=> $username_string,
+				'USER_FLAG'			=> !empty($row['user_flag']) ? $row['user_flag'] : '',
 			]);
 		}
 	}
@@ -439,9 +470,28 @@ class topfive
 		$sql_where = '';
 		if (sizeof($ignore_users))
 		{
-			$sql_where = 'WHERE ' . $this->db->sql_in_set('user_type', $ignore_users, true);
+			$sql_where = $this->db->sql_in_set('u.user_type', $ignore_users, true);
 		}
+		$admin_mod_array = [];
+		// quick check for forum moderators and administrators
+		// some may not want to show them
+		$show_admins_mods = $this->config['top_five_show_admins_mods'];
 
+		if (!$show_admins_mods)
+		{
+			// grab all admins
+			$admin_ary = $this->auth->acl_get_list(false, 'a_', false);
+			$admin_ary = (!empty($admin_ary[0]['a_'])) ? $admin_ary[0]['a_'] : [];
+
+			//grab all mods
+			$mod_ary = $this->auth->acl_get_list(false,'m_', false);
+			$mod_ary = (!empty($mod_ary[0]['m_'])) ? $mod_ary[0]['m_'] : [];
+			$admin_mod_array = array_unique(array_merge($admin_ary, $mod_ary));
+			if (sizeof($admin_mod_array))
+			{
+				$sql_where .= empty($sql_where) ? $this->db->sql_in_set('u.user_id', $admin_mod_array, true) : ' AND ' . $this->db->sql_in_set('u.user_id', $admin_mod_array, true);
+			}
+		}
 		return $sql_where;
 	}
 }

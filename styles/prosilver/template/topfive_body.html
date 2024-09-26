@@ -1,6 +1,5 @@
-{% if S_TOPFIVE_ACTIVE %}
 <a class="category{% if S_TOPFIVE_HIDDEN %} hidden-category{% endif %}" style="display: none; height: 0"></a>
-<div class="forabg responsive-hide" id="top_five">
+<div class="forabg" id="top_five">
 	<div class="inner">
 	<ul class="topiclist">
 		<li class="header">
@@ -25,7 +24,7 @@
 									{% else %}
 										<a href="{{ top_five_topic.U_TOPIC }}" class="topictitle subforum{% if top_five_topic.S_UNREAD %} unread{% else %} read{% endif %}">
 											<i class="icon fa-file-o fa-fw {% if top_five_topic.S_UNREAD %} icon-red{% else %} icon-blue{% endif %} icon-md" aria-hidden="true"></i>
-											{{ top_five_topic.TOPIC_TITLE }}</a><span class="meta">{{ top_five_topic.USERNAME_FULL }} &raquo; {{ top_five_topic.LAST_TOPIC_TIME }} &raquo; {{ lang('IN') }}&nbsp;<a href="{{ top_five_topic.U_FORUM }}">{{ top_five_topic.FORUM_NAME }}</a></span>
+											{{ top_five_topic.TOPIC_TITLE }}</a><span class="meta">{{ top_five_topic.USERNAME_FULL }} {% if top_five_topic.USER_FLAG %} {{ top_five_topic.USER_FLAG }} {% endif %}&raquo; {{ top_five_topic.LAST_TOPIC_TIME }} &raquo; {{ lang('IN') }}&nbsp;<a href="{{ top_five_topic.U_FORUM }}">{{ top_five_topic.FORUM_NAME }}</a></span>
 										{% EVENT rmcgirr83_top_five_topiclist_row_append %}
 									{% endif %}
 								</li>
@@ -37,7 +36,7 @@
 					<ul>
 						{% for top_five_active in loops.top_five_active %}
 							<li>
-								<span class="meta">{{ top_five_active.USERNAME_FULL }}<span><br />&nbsp;&nbsp;{{ lang('POSTS') }}{{ lang('COLON') }} <a href="{{ top_five_active.S_SEARCH_ACTION }}">{{ top_five_active.POSTS }}</a></span></span>
+								<span class="meta">{{ top_five_active.USERNAME_FULL }} {% if top_five_active.USER_FLAG %} {{ top_five_active.USER_FLAG }} {% endif %}<span><br>&nbsp;&nbsp;{{ lang('POSTS') }}{{ lang('COLON') }} <a href="{{ top_five_active.S_SEARCH_ACTION }}" title="{{ top_five_active.USER_LASTPOST_TIME }}">{{ top_five_active.POSTS }}</a></span></span>
 							</li>
 						{% endfor %}
 					</ul>
@@ -46,7 +45,7 @@
 					<ul>
 						{% for top_five_newest in loops.top_five_newest %}
 							<li>
-								<span class="meta">{{ top_five_newest.USERNAME_FULL }}<span><br />&nbsp;&nbsp;{{ lang('JOINED') }}{{ lang('COLON') }} {{ top_five_newest.REG_DATE }}</span></span>
+								<span class="meta">{{ top_five_newest.USERNAME_FULL }}{% if top_five_newest.USER_FLAG %} {{ top_five_newest.USER_FLAG }} {% endif %}<span><br>&nbsp;&nbsp;{{ lang('JOINED') }}{{ lang('COLON') }} {{ top_five_newest.REG_DATE }}</span></span>
 							</li>
 						{% endfor %}
 					</ul>
@@ -56,4 +55,3 @@
 	</ul>
 	</div>
 </div>
-{% endif %}

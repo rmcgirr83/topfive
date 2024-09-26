@@ -18,14 +18,9 @@
 	<fieldset>
 		<legend>{{ lang('TF_CONFIG') }}</legend>
 		<dl>
-			<dt><label>{{ lang('TF_ACTIVE') }}</label></dt>
-			<dd><input type="radio" class="radio" name="top_five_active" value="1" {% if ACTIVE %}checked="checked"{% endif %}/> {{ lang('YES') }} &nbsp;
-				<input type="radio" class="radio" name="top_five_active" value="0" {% if not ACTIVE %}checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
-		</dl>
-		<dl>
-			<dt><label>{{ lang('TF_LOCATION') }}{{ lang('COLON') }}</label><br>
+			<dt><label>{{ lang('TF_LOCATION') ~ lang('COLON') }}</label><br>
 			<span>{{ lang('TF_LOCATION_EXPLAIN') }}</span></dt>
-			<dd>{{ LOCATION }}</dd>
+			<dd><select>{{ LOCATION }}</select></dd>
 		</dl>
 		<dl>
 			<dt><label>{{ lang('TF_AVATARS') }}</label><br />{{ lang('TF_AVATARS_EXPLAIN') }}</dt>
@@ -34,10 +29,10 @@
 		</dl>
 		<dl>
 			<dt><label>{{ lang('TF_HOWMANY') }}</label><br />{{ lang('TF_HOWMANY_EXPLAIN') }}</dt>
-			<dd><input type="text" name="top_five_how_many" size="10" value="{{ HOWMANY }}" /></dd>
+			<dd><input type="number" name="top_five_how_many" size="10" min="5" max="100" value="{{ HOWMANY }}" /></dd>
 		</dl>
 		<dl>
-			<dt><label>{{ lang('TF_EXCLUDED') }}{{ lang('COLON') }}</label><br /><span>{{ lang('TF_EXCLUDED_EXPLAIN') }}</span></dt>
+			<dt><label>{{ lang('TF_EXCLUDED') ~ lang('COLON') }}</label><br /><span>{{ lang('TF_EXCLUDED_EXPLAIN') }}</span></dt>
 			<dd>{{ TF_EXCLUDED }}</dd>
 		</dl>
 		<dl>

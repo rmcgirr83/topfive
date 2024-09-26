@@ -38,4 +38,5 @@ $lang = array_merge($lang, [
 	'TOP_FIVE_ACTIVE'	=> 'Top Active Users',
 	'TOP_FIVE_NEWEST'	=> 'Newest Users',
 	'BY'                => 'by&nbsp;',
+	'USER_LASTPOST_TIME'	=> 'Last Post: %s',
 ]);
