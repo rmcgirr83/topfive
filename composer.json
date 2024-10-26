@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Displays statistics of the latest new posts, new users and most active users on the forum index page.",
     "homepage": "https://github.com/RMcGirr83/topfive",
-    "version": "1.2.7",
-    "time": "2024-09-26",
+    "version": "1.2.8",
+    "time": "2024-10-26",
     "keywords": [
         "phpbb",
         "extension",

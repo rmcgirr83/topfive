@@ -294,7 +294,7 @@ class topfive
 				'SELECT' => 'u.user_id, u.username, u.user_colour, u.user_posts, u.user_avatar, u.user_avatar_width, u.user_avatar_height, u.user_avatar_type, u.user_lastpost_time',
 				'FROM' => [USERS_TABLE => 'u'],
 				'WHERE' => $sql_where,
-				'ORDER BY' => 'u.user_posts DESC',
+				'ORDER_BY' => 'u.user_lastpost_time DESC, u.user_posts DESC',
 			];
 
 			if ($this->nationalflags !== null)
@@ -379,7 +379,7 @@ class topfive
 				'SELECT' => 'u.user_id, u.username, u.user_colour, u.user_regdate, u.user_avatar, u.user_avatar_width, u.user_avatar_height, u.user_avatar_type',
 				'FROM' => [USERS_TABLE => 'u'],
 				'WHERE' => $sql_where,
-				'ORDER BY' =>  'u.user_regdate DESC',
+				'ORDER_BY' =>  'u.user_regdate DESC',
 			];
 			if ($this->nationalflags !== null)
 			{
