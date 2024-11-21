@@ -56,6 +56,12 @@ class topfive
 	/** @var string php_ext */
 	protected $php_ext;
 
+	/** @var relativedates */
+	protected $relativedates;
+
+	/** @var $nationalflags */
+	protected $nationalflags;
+
 	public function __construct(
 		auth $auth,
 		config $config,

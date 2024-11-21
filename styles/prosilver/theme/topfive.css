@@ -76,6 +76,6 @@ dd.tf-active-header {
 }
 
 /* fixes national flags position */
-.top_five .flag_image {
-  vertical-align: middle;
+.meta .flag_image {
+	vertical-align: top;
 }
